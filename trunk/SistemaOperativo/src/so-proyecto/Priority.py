@@ -7,6 +7,7 @@ class Priority:
         lenght=len(qReady)
         return qReady.pop(lenght-1)
 
-    def add(self, qReady, aPCB):
+    def add(qReadyself, qReady, aPCB):
        qReady.append(aPCB)
-       qReady.sorted(aPCB.priority) ## ver bien como es el metodo para ordenar.
+       qReady.sorted(self.queue, key = lambda pcb:pcb.priority)
+      
