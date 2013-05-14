@@ -3,7 +3,7 @@ import Queue
 class Scheduler:
 
     def __init__(self, aPolicity):
-        self.qReady = aQueue()
+        self.qReady = [] # lo deje como una lista
         self.policity = aPolicity
         
     def next(self):
