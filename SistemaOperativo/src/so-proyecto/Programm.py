@@ -1,5 +1,9 @@
+'''
+@author: Pablo
+'''
+
 class Programm:
- def __init__(self,aMemory):
+        def __init__(self,aMemory):
                 self.instrucciones = []
                 self.memory = aMemory
         

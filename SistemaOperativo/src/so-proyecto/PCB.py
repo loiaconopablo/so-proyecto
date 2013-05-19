@@ -1,3 +1,7 @@
+'''
+@author: Pablo
+'''
+
 class PCB:
 #Process Control Block
     def __init__(self,aProgramm, aPid , aPriority=1, aPC):
@@ -6,3 +10,12 @@ class PCB:
         self.status
         self.priority = aPriority
         self.pc = aPC
+    
+    def changeStatus(self, aNewStatus):
+        self.status=aNewStatus
+        
+    def increasePc(self):
+        self.pc+=1
+        
+    
+    
