@@ -1,3 +1,7 @@
+'''
+@author: Pablo
+'''
+
 class CPU:
 
     def __init__(self,sched,kernel,cola,memory,clock):

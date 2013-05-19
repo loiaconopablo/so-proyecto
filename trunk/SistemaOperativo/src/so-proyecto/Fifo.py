@@ -1,11 +1,18 @@
+'''
+@author: Pablo
+'''
+
 
 class Fifo:
 
     def __init__(self):
-        self
+        self.qReady = []
 
-    def next(self, qReady):
-        return qReady.pop(0)
+    def next(self):
+        return self.qReady.pop(0)
 
     def add(self,qReady,aPCB):
-        return qReady.append(aPCB)
+        return self.qReady.append(aPCB)
+
+    def isRR(self):
+        return False

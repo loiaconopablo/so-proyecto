@@ -1,13 +1,17 @@
 class Priority:
 
     def __init__(self):
-       self
+       self.qReady = []
 
-    def next(self, qReady):
-        lenght=len(qReady)
-        return qReady.pop(lenght-1)
+    def next(self):
+        lenght=len(self.qReady)
+        self.qReady.pop(lenght-1)
+        return self.qReady 
 
-    def add(qReadyself, qReady, aPCB):
-       qReady.append(aPCB)
-       qReady.sorted(self.queue, key = lambda pcb:pcb.priority)
-      
+    def add(aPCB):
+       self.qReady.append(aPCB)
+       self.qReady.sorted(self.queue, key = lambda pcb:pcb.priority)
+       return self.qReady
+   
+    def isRR(self):
+        return False

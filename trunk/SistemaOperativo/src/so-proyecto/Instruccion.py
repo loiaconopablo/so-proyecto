@@ -1,3 +1,8 @@
+'''
+@author: Pablo
+'''
+
+
 class Instruccion:
         def __init__(self, aPosition1, aPosition2, aPosition3):
                 self.first = aPosition1
