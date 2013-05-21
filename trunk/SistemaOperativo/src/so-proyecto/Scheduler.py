@@ -19,7 +19,7 @@ class Scheduler:
         return len(self.policity.qReady) == 0
     
     def quamtum(self):
-        return self.policity.quamtum
-        
-    def withRR(self):
-        return self.policity.isRR()
+        if self.policity.isRR():
+            return self.policity.quantum
+        else: return 10
+
