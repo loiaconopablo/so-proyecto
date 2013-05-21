@@ -4,12 +4,12 @@
 
 class Programm:
         def __init__(self,aMemory):
-                self.instrucciones = []
+                self.instruction = []
                 self.memory = aMemory
         
         def add(self, aObject):
-                self.instrucciones.append(aObject)
+                self.instruction.append(aObject)
 
         def run(self):
-                for i in self.instrucciones:
+                for i in self.instruction:
                         i.execute(self.memory)
