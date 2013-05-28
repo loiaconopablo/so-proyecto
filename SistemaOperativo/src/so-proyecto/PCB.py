@@ -10,6 +10,7 @@ class PCB:
         self.status
         self.priority = aPriority
         self.pc = aPC
+        self.dirBase = None
     
     def changeStatus(self, aNewStatus):
         self.status=aNewStatus
@@ -17,5 +18,12 @@ class PCB:
     def increasePc(self):
         self.pc+=1
         
+    def getSize(self):
+        return self.id.getSize()
     
+    def setDirBase(self, aDirection):
+        self.dirBase= aDirection   
+        
+    def getInstruction(self):
+        return self.id.getInstruction()
     
