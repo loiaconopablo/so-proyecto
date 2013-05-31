@@ -5,47 +5,47 @@ Created on 27/05/2013
 '''
 class Block:
 
-    def __init__(self,baseCell,endCell):
-        self.dirBase=baseCell
-        self.dirEnd=endCell
-         #self.inMemory=False
+    def __init__(self, baseCell, endCell):
+        self.dirBase = baseCell
+        self.dirEnd = endCell
+         # self.inMemory=False
 
-    def setPid(self,process):
-        self.pid=process
+    def setPid(self, process):
+        self.pid = process
     
     def getDirBase(self):
         return self.dirBase
 
     def getSize(self):
-        return (self.dirEnd - self.dirBase)
+        return (self.dirEnd - self.dirBase + 1)
 
-    def setDirBase(self,direction):
-        self.dirBase=direction
+    def setDirBase(self, direction):
+        self.dirBase = direction
         
     def getDirEnd(self):
         return self.dirEnd
         
     def cellDestino(self):
         if not self.lastCell():
-            return (self.dirFin+1)
+            return (self.dirFin + 1)
         else: 
             return None
     
     def cellAnterior(self):
         if not self.firstCell():
-            return (self.dirBase-1)
+            return (self.dirBase - 1)
         else: 
             return None
         
-    def lastCell(self):
-        return (self.dirBase==0)
-    
     def firstCell(self):
-        return (self.dirEnd==1024)
+        return (self.dirBase == 1)
+    
+    def lastCell(self):
+        return (self.dirEnd == 1024)
              
-    def containDir(self, aDirCell): #pregunta si una direccion esta incluida en el bloque
+    def containDir(self, aDirCell):  # pregunta si una direccion esta incluida en el bloque
        # return (aDirCell in range(self.getDirBase(),self.getDirEnd()+1)) Otra Opcion de hacerlo
-        return (self.getDirBase()>= aDirCell and self.getDirEnd()<= aDirCell)
+        return (self.getDirBase() >= aDirCell and self.getDirEnd() <= aDirCell)
     
     #===========================================================================
     # def getInMemory(self):
