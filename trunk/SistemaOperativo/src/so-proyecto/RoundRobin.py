@@ -11,7 +11,7 @@ class RoundRobin:
     def next(self):
         return self.qReady.pop(0)
 
-    def add(self,aPCB):
+    def add(self, aPCB):
         self.qReady.append(aPCB)
         return self.qReady
     

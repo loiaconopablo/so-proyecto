@@ -11,10 +11,10 @@ class Timer:
         self.quantum = kernel.scheduler.quamtum()
         self.currentQuantum = self.quantum
         self.clock = Clock()
-        self.kernel= aKernel
+        self.kernel = aKernel
 
     def decreasedQuamtum(self):
-        self.currentQuantum= self.currentQuantum - 1
+        self.currentQuantum = self.currentQuantum - 1
         return self.currentQuantum
               
     def reset(self):

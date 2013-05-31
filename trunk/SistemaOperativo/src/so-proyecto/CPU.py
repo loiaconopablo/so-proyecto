@@ -4,20 +4,20 @@
 
 class CPU:
 
-    def __init__(self,kernel):
+    def __init__(self, kernel):
         self.kernel = kernel
         self.mmu = memory
-        self.pc=0
+        self.pc = 0
         self.pcbCurrent = null
         self.timer = Timer()
         
     def fetchInstruction(self,):
         if self.pcbCurrent != null:
             self.instruction = self.mmu.get(self.pcbCurrent.PC)
-            self.instruccion.run() # esta linea la copie de lo de Marcelo del pizarron, preguntar que es lo que hace el run de la instrucciom
+            self.instruccion.run()  # esta linea la copie de lo de Marcelo del pizarron, preguntar que es lo que hace el run de la instrucciom
                                   # a diferencia del execute()
             self.pcbCurrent.increasePc()
-            if self.instruction.isIO():#Validar (si es una instruccion de I/O) para hacer una IRQ
+            if self.instruction.isIO():  # Validar (si es una instruccion de I/O) para hacer una IRQ
                 self.iOInterrupt(self.pcbCurrent)
             else:            
                 self.instruction.execute()
@@ -32,5 +32,5 @@ class CPU:
         self.kernel.manageIRQ.killInterrupt(aPCB)
     
     def setPCB(self , aPCB):
-        self.pcbCurrent= aPCB
+        self.pcbCurrent = aPCB
         
