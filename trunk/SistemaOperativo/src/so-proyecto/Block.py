@@ -8,10 +8,13 @@ class Block:
     def __init__(self, baseCell, endCell):
         self.dirBase = baseCell
         self.dirEnd = endCell
+        self.pcbAssociated = None
          # self.inMemory=False
 
-    def setPid(self, process):
-        self.pid = process
+    #====================================== ?????
+    #def setPid(self, process):
+    #    self.pid = process
+    #======================================
     
     def getDirBase(self):
         return self.dirBase
@@ -25,23 +28,25 @@ class Block:
     def getDirEnd(self):
         return self.dirEnd
         
-    def cellDestino(self):
-        if not self.lastCell():
-            return (self.dirFin + 1)
-        else: 
-            return None
-    
-    def cellAnterior(self):
-        if not self.firstCell():
-            return (self.dirBase - 1)
-        else: 
-            return None
-        
-    def firstCell(self):
-        return (self.dirBase == 1)
-    
-    def lastCell(self):
-        return (self.dirEnd == 1024)
+    #===========================================================================
+    # def cellDestino(self):
+    #     if not self.lastCell():
+    #         return (self.dirFin + 1)
+    #     else: 
+    #         return None
+    # 
+    # def cellAnterior(self):
+    #     if not self.firstCell():
+    #         return (self.dirBase - 1)
+    #     else: 
+    #         return None
+    #     
+    # def firstCell(self):
+    #     return (self.dirBase == 1)
+    # 
+    # def lastCell(self):
+    #     return (self.dirEnd == 1024)
+    #===========================================================================
              
     def containDir(self, aDirCell):  # pregunta si una direccion esta incluida en el bloque
        # return (aDirCell in range(self.getDirBase(),self.getDirEnd()+1)) Otra Opcion de hacerlo
