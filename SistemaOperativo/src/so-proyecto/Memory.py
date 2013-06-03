@@ -30,7 +30,7 @@ class Memory:
     def saveInMemory(self, aPCB):
         if self.freeCellsize() > aPCB.size():
             if self.isFreeBlockTo(aPCB):
-                self.assignBlock(aPCB) 
+                self.assignBlock(aPCB)
             else:
                 self.compact(aPCB.getSize())  # Se le dice Compacta y se le pasa el tamaño que se necesista, asi compacta 
                 self.assignBlock(aPCB)  # hasta llegar al tamaño que se necesita y para
@@ -54,15 +54,49 @@ class Memory:
     def isFreeBlockTo(self, aPCB):
         return self.policityMemory.isFreeBlockTo(self.freeBlocks, aPCB.getSize())
     
+    # HACE FALTA EL GIVEMEFREEBLOCKFROMCELL???!!!!!  PARA QUE??!!!
     def giveMeFreeBlockFromCell(self, aDirCell):
         for block in self.freeBlocks:
             if block.containDir(aDirCell):
                 return (self.freeBlocks.pop(block))
                 break
+    # HACE FALTA EL GIVEMEFREEBLOCKFROMCELL???!!!!!  PARA QUE??!!!
         
-    def compact(self):
-        self  # IMPLEMENTAR
+    def compact(self): # COMPACTA TODA LA MEMORIA
+        self.compactLogicMemory()
+        self.compactPhysicalMemory()
         
-    def releaseMemory(self, baseCell, endCell):
-        self  # IMPLEMENTAR
+    def compactLogicMemory(self):
+        
+        #  COMPACTANDO BLOQUES EN USO
+        lastDir = 0
+        for block in self.blocks:
+            blockSize = block.getSize() # guardo la cantidad de instrucciones
+            block.dirBase = lastDir  # SETTEO LA DIRBASE DEL BLOQUE
+            block.pcbAssociated.setDirBase(lastDir) # MODIFICO AL PCB ASOCIADO AL BLOQUE, SU DIRECCION  DE INICIO.
+            block.dirEnd = block.dirBase + (block.getSize() - 1)
+            lastDir = block.dirEnd + 1    
+        
+        #  COMPACTANDO BLOQUES SIN USO
+        positionLastBlock = (len(self.blocks)) - 1 # ME GUARDO LA POSICION DEL ULTIMO BLOQUE
+        lastBlock = self.blocks[positionLastBlock] # ME GUARDO AL ULTIMO BLOQUE.
+        self.freeBlocks = [Block((lastBlock.dirEnd() + 1), 1024)] # CREO EL BLOQUE LIBRE QUE SALIO DE COMPACTAR.
+        
+    def compactPhysicalMemory(self):
+        for block in self.blocks:
+            self.addInstruction(block.getDirBase(), block.pcbAssociated.getInstruction())
+        
+        
+    #===========================================================================
+    # def releaseMemory(self, baseCell, endCell):
+    #     
+    #     for i in range(baseCell,(endCell +1)):
+    #         self.physicalMemory[i] = None
+    #===========================================================================
+    # PARA QUE SERVIRIA?
+        
+        
+    def addBlock(self, aBlock):
+        # IMPLEMENTAR -> agregar el bloqueParametro a la lista de bloques usados
+        self.blocks.append(aBlock)
         

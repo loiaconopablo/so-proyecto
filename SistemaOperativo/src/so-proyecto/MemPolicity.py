@@ -28,6 +28,7 @@ class PrimerAjuste(MemPolicitity):
             if block.getSize() >= sizePCB:
                 aPCB.setDirBase(block.getDirBase())
                 position = aFreeListBlock.index(block)  # tengo que pedirle el indice a la lista del objeto
+                block.pcbAssociated = aPCB # AGREGO AL BLOQUE DONDE SE GUARDA EL PCB, ESTE MISMO.
                 return aFreeListBlock.pop(position)
                 break
         
