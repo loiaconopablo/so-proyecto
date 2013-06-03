@@ -69,7 +69,7 @@ class Memory:
     def compactLogicMemory(self):
         
         #  COMPACTANDO BLOQUES EN USO
-        lastDir = 0
+        lastDir = 1
         for block in self.blocks:
             blockSize = block.getSize() # guardo la cantidad de instrucciones
             block.dirBase = lastDir  # SETTEO LA DIRBASE DEL BLOQUE
@@ -93,7 +93,8 @@ class Memory:
     #     for i in range(baseCell,(endCell +1)):
     #         self.physicalMemory[i] = None
     #===========================================================================
-    # PARA QUE SERVIRIA?
+    # PARA QUE SERVIRIA? 
+    # Rta: Sirver para liberar memoria fisica de un sector.
         
         
     def addBlock(self, aBlock):
