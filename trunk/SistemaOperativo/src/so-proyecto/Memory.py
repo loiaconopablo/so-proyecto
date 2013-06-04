@@ -69,9 +69,9 @@ class Memory:
     def compactLogicMemory(self):
         
         #  COMPACTANDO BLOQUES EN USO
-        lastDir = 1
+        lastDir = self.firstFreeDir()
         for block in self.blocks:
-            blockSize = block.getSize() # guardo la cantidad de instrucciones
+            blockSize = block.getSize() # guardo el tamaño del bloque = la cantidad de instrucciones
             block.dirBase = lastDir  # SETTEO LA DIRBASE DEL BLOQUE
             block.pcbAssociated.setDirBase(lastDir) # MODIFICO AL PCB ASOCIADO AL BLOQUE, SU DIRECCION  DE INICIO.
             block.dirEnd = block.dirBase + (block.getSize() - 1)
@@ -81,6 +81,15 @@ class Memory:
         positionLastBlock = (len(self.blocks)) - 1 # ME GUARDO LA POSICION DEL ULTIMO BLOQUE
         lastBlock = self.blocks[positionLastBlock] # ME GUARDO AL ULTIMO BLOQUE.
         self.freeBlocks = [Block((lastBlock.dirEnd() + 1), 1024)] # CREO EL BLOQUE LIBRE QUE SALIO DE COMPACTAR.
+        
+    def firstFreeDir(self):
+        firstCell = self.freeBlocks(0).dirBase #guarda la primera cell del primer bloque libre, para tener un valor de referencia
+        for block in self.freeBlocks: #compara las direcciones de celdas, si el menor la guarda
+            if block.dirBase<firstCell:
+                firstCell=block.dirBase
+        
+        return firstCell
+            
         
     def compactPhysicalMemory(self):
         for block in self.blocks:
