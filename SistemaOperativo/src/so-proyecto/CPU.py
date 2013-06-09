@@ -13,14 +13,13 @@ class CPU:
         
     def fetchInstruction(self,):
         if self.pcbCurrent != null:
-            self.instruction = self.mmu.get(self.pcbCurrent.PC)
-            self.instruccion.run()  # esta linea la copie de lo de Marcelo del pizarron, preguntar que es lo que hace el run de la instrucciom
-                                  # a diferencia del execute()
+            self.programm = self.mmu.get(self.pcbCurrent.PC)
+            self.programm.run()
             self.pcbCurrent.increasePc()
-            if self.instruction.isIO():  # Validar (si es una instruccion de I/O) para hacer una IRQ
+            if self.programm.isIO():  # Validar (si es una instruccion de I/O) para hacer una IRQ
                 self.iOInterrupt(self.pcbCurrent)
             else:            
-                self.instruction.execute()
+                self.programm.execute()
               #  if (preguntar si es la ultima instruccion)): Armar condicion bien
               #     self.killInterrupt(self.pcbCurrent)
                     

@@ -27,14 +27,16 @@ class Kernel:
         self.modeKernel = False
         
     def setNextPcb(self):
-        return self.cpu.setPcb(self.scheduler.next())
+        self.cpu.setPcb(self.scheduler.next())
 
     def contextSwitch(self):
+        self.modeOn() # coloco en modo kernel
         if self.cpu.pcbCurrent == null:  # #chequeo si el CPU finalizo el ultimo PCB o lo 
             self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
         else:
             self.scheduler.add(self.cpu.pcbCurrent)  # # vuelvo a poner el pcb en la cola qReady
             self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
-            
+        self.modoOff() #vuelvo al modo usuario
+        
     def isModeKernel(self):
         return self.modeKernel
