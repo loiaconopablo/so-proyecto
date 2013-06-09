@@ -13,7 +13,7 @@ class CPU:
         
     def fetchInstruction(self,):
         if self.pcbCurrent != null:
-            self.programm = self.mmu.get(self.pcbCurrent.PC)
+            self.programm = self.mmu.saveInMemory(self.pcbCurrent.PC)#carga el programa en memoria
             self.programm.run()
             self.pcbCurrent.increasePc()
             if self.programm.isIO():  # Validar (si es una instruccion de I/O) para hacer una IRQ
@@ -33,3 +33,5 @@ class CPU:
     def setPCB(self , aPCB):
         self.pcbCurrent = aPCB
         
+    def getPCB(self):
+        return self.pcbCurrent

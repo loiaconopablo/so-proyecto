@@ -9,7 +9,7 @@ class Block:
         self.dirBase = baseCell
         self.dirEnd = endCell
         self.pcbAssociated = None
-         # self.inMemory=False
+        # self.inMemory=False
 
     #====================================== ?????
     #def setPid(self, process):
