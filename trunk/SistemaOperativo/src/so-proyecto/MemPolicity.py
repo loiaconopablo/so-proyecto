@@ -12,6 +12,9 @@ class MemPolicitity:
     @abc.abstractclassmethod
     def savePCB(self, aFreeListBlock, aPCB):
         self                            
+    @abc.abstractclassmethod
+    def choiseBlock(self, aFreeListBlock, sizePCB):
+        self
     
     def isFreeBlockTo(self, aFreeListBlock, aSize): # preguntar si al heredar lo utilizan
         for block in aFreeListBlock:
@@ -23,52 +26,68 @@ class MemPolicitity:
     
     def quedanCeldasVacias(self, block, sizeInstruction): 
        return block.getSize() != sizeInstruction          
-   
+
+    def savePCB(self, aFreeListBlock, aPCB):
+        sizePCB = aPCB.getSize()
+        
+        bestBlock = self.choiseBlock(aFreeListBlock, sizePCB) #Aca va a lógica de cada Policitica                     
+                
+        aPCB.setDirBase(bestBlock.getDirBase()) # Seteo en el pcb en que celda se guarda en memoria
+        position = aFreeListBlock.index(bestBlock)  # Tengo que pedirle el indice a la lista del objeto
+        bestBlock.pcbAssociated = aPCB  # AGREGO AL BLOQUE DONDE SE GUARDA EL PCB, ESTE MISMO.
+                
+        if self.quedanCeldasVacias(bestBlock, sizePCB): #Pregunto si quedan celdas que no se usen
+            newFreeBlock = Block((bestBlock.getDirBase()+sizePCB),bestBlock.getdDirEnd()) # Genero nuevo bloque vacio de la sobra
+            aFreeListBlock.append(newFreeBlock) #Agrego el bloque vacio a la lista de los vacios.
+            bestBlock.dirEnd=((bestBlock.getDirBase()+sizePCB)-1) # Recorto al bloque asignado
+                
+        return aFreeListBlock.pop(position)
+ 
  #-----------------------------------------------------         
 class PrimerAjuste(MemPolicitity):
     
     def __init__(self):
         self
-            
-    def savePCB(self, aFreeListBlock, aPCB):
-        sizePCB = aPCB.getSize()
+     
+    def choiseBlock(self, aFreeListBlock, sizePCB):
+        bestBlock = null
         for block in aFreeListBlock:
             if block.getSize() >= sizePCB:
-                aPCB.setDirBase(block.getDirBase())
-                position = aFreeListBlock.index(block)  # tengo que pedirle el indice a la lista del objeto
-                block.pcbAssociated = aPCB  # AGREGO AL BLOQUE DONDE SE GUARDA EL PCB, ESTE MISMO.
-                
-                if self.quedanCeldasVacias(block, sizePCB):
-                    newFreeBlock = Block((block.getDirBase()+sizePCB),block.getdDirEnd()) # genero nuevo bloque vacio de la sobra
-                    aFreeListBlock.append(newFreeBlock)
-                    block.dirEnd=((block.getDirBase()+sizePCB)-1) # recorto al bloque asignado
-                
-                return aFreeListBlock.pop(position) #retorno al bloque usado y lo saco de la lista de free
-                break     
-
+                bestBlock = block
+                break
+        return bestBlock
 
 #-----------------------------------------------------    
+
 class MejorAjuste(MemPolicitity):
     
     def __init__(self):
-        self
-        
-    def savePCB(self, aFreeListBlock, aPCB):
-        sizePCB = aPCB.getSize()
+        self       
+
+    def choiseBlock(self, aFreeListBlock, sizePCB):
         bestBlock = null
         garbage = 17
         for block in aFreeListBlock:
-            if (block.getSize() >= sizePCB) and (garbage<(block.getSize()) - sizePCB): #pregunta si entra y si tiene un menor desperdicio
+            if (block.getSize() >= sizePCB) and (garbage > (block.getSize()) - sizePCB): #pregunta si entra y si tiene un menor desperdicio
                 bestBlock = block
-                garbage= sizePCB - block.getSize()                     
-                
-        aPCB.setDirBase(bestBlock.getDirBase())
-        position = aFreeListBlock.index(bestBlock)  # tengo que pedirle el indice a la lista del objeto
-        bestBlock.pcbAssociated = aPCB  # AGREGO AL BLOQUE DONDE SE GUARDA EL PCB, ESTE MISMO.
-                
-        if self.quedanCeldasVacias(bestBlock, sizePCB):
-            newFreeBlock = Block((bestBlock.getDirBase()+sizePCB),bestBlock.getdDirEnd()) # genero nuevo bloque vacio de la sobra
-            aFreeListBlock.append(newFreeBlock)
-            bestBlock.dirEnd=((bestBlock.getDirBase()+sizePCB)-1) # recorto al bloque asignado
-                
-        return aFreeListBlock.pop(position) #retorno al bloque usado y lo saco de la lista de free   
+                garbage = sizePCB - block.getSize()
+        
+        return bestBlock
+
+#-----------------------------------------------------    
+
+class PeorAjuste(MemPolicity):
+    
+    def __init__(self):
+        self
+    
+    def choiseBlock(self, aFreeListBlock, sizePCB):
+        bestBlock = null
+        garbage = 0
+        for block in aFreeListBlock:
+            if (block.getSize() >= sizePCB) and (garbage < (block.getSize()) - sizePCB): #pregunta si entra y si tiene un menor desperdicio
+                bestBlock = block
+                garbage = sizePCB - block.getSize()
+        
+        return bestBlock
+        
