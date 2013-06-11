@@ -11,8 +11,11 @@ class Fifo:
     def next(self):
         return self.qReady.pop(0)
 
-    def add(self,qReady,aPCB):
+    def add(self, aPCB):
         return self.qReady.append(aPCB)
 
     def isRR(self):
         return False
+    
+    def retryAdd(self, aPCB):
+        self.add(aPCB)

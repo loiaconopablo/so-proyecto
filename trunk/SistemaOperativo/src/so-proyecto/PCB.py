@@ -4,7 +4,7 @@
 
 class PCB:
 #Process Control Block
-    def __init__(self,aProgramm, aPid , aPriority=1, aPC):
+    def __init__(self,aProgramm, aPid , aPriority=10, aPC):
         self.id = aProgramm
         self.pid = aPid
         self.status
@@ -17,6 +17,9 @@ class PCB:
         
     def increasePc(self):
         self.pc+=1
+        
+    def decreasePriority(self):
+        self.priority = self.priority - 1
         
     def getSize(self):
         return self.id.getSize()

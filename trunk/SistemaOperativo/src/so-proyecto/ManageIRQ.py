@@ -10,34 +10,34 @@ class ManageIRQ:
             self.kernel = aKernel
         
     def iOInterrupt(self, pcb):
-        self.kernel.modoOff()
+        self.kernel.modoOn()
         self.kernel.handlerIO.handle(pcb)
         print("Se mando un proceso a la cola de I/O")
-        self.kernel.modoOn()
+        self.kernel.modoOff()
 
     def killInterrupt(self, pcb):
-        self.kernel.modoOff()
+        self.kernel.modoOn()
         self.kernel.pcbFinish.append(self.kernel.cpu.getPCB())  # se guarda el pcb finalizado en la lista.
         self.kernel.cpu.pcb = null  # borrar el pcb terminado
         print("Finalizo el proceso actual")
         self.kernel.contextSwitch()
-        self.kernel.modoOn()
+        self.kernel.modoOff()
         
     def timeOutInterrupt(self):
-        self.kernel.modoOff()
-        print("Se termino el tiempo de ejecuciòn del proceso actual")
-        self.handler.timeOutInterrupt()
         self.kernel.modoOn()
+        self.kernel.contextSwitch()
+        print("Se termino el tiempo de ejecuciòn del proceso actual")
+        self.kernel.modoOff()
         
     def nilInterrupt(self):
-        self.kernel.modoOff()
+        self.kernel.modoOn()
         print("No hay mas programas en la QReady")
         self.handler.nilInterrupt()    
-        self.kernel.modoOn()
+        self.kernel.modoOff()
         
-    def newInterrupt(self, process):
+    def newInterrupt(self, program):
         print("Entro un nuevo proceso")
-        self.kernel.insertProcess(process)
+        self.kernel.insertProcess(program)
         self.kernel.reschedule()    
             
         

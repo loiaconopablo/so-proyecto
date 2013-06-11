@@ -23,7 +23,6 @@ class CPU:
               #  if (preguntar si es la ultima instruccion)): Armar condicion bien
               #     self.killInterrupt(self.pcbCurrent)
                     
-            
     def iOInterrupt(self, aPCB):
         self.kernel.manageIRQ.iOInterrupt(aPCB)
 
