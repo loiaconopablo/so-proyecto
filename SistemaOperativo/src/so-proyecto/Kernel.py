@@ -11,7 +11,7 @@ class Kernel:
         self.processor = cpu
         self.modeKernel = False  # comienza en modo usuario
         self.scheduler = Scheduler(policity)
-        # self.pcbCurrent
+        self.pcbCurrent = null
         self.handlerIO = HandlerIO()
         self.memory = aMemory
         self.timer = Timer(self) 
@@ -29,14 +29,25 @@ class Kernel:
     def setNextPcb(self):
         self.cpu.setPcb(self.scheduler.next())
 
+
     def contextSwitch(self):
         self.modeOn() # coloco en modo kernel
         if self.cpu.pcbCurrent == null:  # #chequeo si el CPU finalizo el ultimo PCB o lo 
             self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
         else:
-            self.scheduler.add(self.cpu.pcbCurrent)  # # vuelvo a poner el pcb en la cola qReady
+            self.returnToPcbTable()  # # vuelvo a poner el pcb en la cola qReady
             self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
         self.modoOff() #vuelvo al modo usuario
         
+    def returnToPcbTable(self):
+        self.scheduler.retryAdd(self.cpu.pcbCurrent)
+
     def isModeKernel(self):
         return self.modeKernel
+    
+    def addProcess(self, aProgramm):
+        self.manageIRQ.newInterrupt(aProgramm)
+        
+    def insertProcess(self, aProgramm):
+        self #hacer
+        

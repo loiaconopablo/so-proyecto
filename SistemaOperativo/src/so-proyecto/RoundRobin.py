@@ -15,5 +15,8 @@ class RoundRobin:
         self.qReady.append(aPCB)
         return self.qReady
     
+    def retryAdd(self, aPCB):
+        self.add(aPCB)
+    
     def isRR(self):
         return True 

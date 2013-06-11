@@ -8,7 +8,7 @@ from Kernel import *
 
 class Timer:
     def __init__(self, aKernel):
-        self.quantum = kernel.scheduler.quamtum()
+        self.quantum = aKernel.scheduler.quamtum()
         self.currentQuantum = self.quantum
         self.clock = Clock()
         self.kernel = aKernel
@@ -28,7 +28,9 @@ class Timer:
         
     def run(self):
         if not self.kernel.isModeKernel():
-            self.decreasedQuamtum()
             if self.timeOut():
                 self.timeOutInterrupt()
-            else: self.kernel.cpu.fetchInstruction()
+                self.reset()
+            else: 
+                self.decreasedQuamtum()
+                self.kernel.cpu.fetchInstruction()

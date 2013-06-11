@@ -14,6 +14,10 @@ class Scheduler:
     def add(self, aPCB):
         aPCB.changeStatus('Ready')
         self.policity.add(aPCB)
+        
+    def retryAdd(self, aPCB):
+        aPCB.changeStatus('Ready')
+        self.policity.retryAdd(aPCB)
 
     def isEmpty(self):
         return len(self.policity.qReady) == 0
@@ -22,4 +26,6 @@ class Scheduler:
         if self.policity.isRR():
             return self.policity.quantum
         else: return 10
+        
+    
 
