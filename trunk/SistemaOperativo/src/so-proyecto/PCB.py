@@ -1,16 +1,17 @@
 '''
 @author: Pablo
 '''
+from State import *
 
 class PCB:
 #Process Control Block
-    def __init__(self,aProgramm, aPid , aPriority=10, aPC):
+    def __init__(self,aProgramm, aPid, aPriority=10):
         self.id = aProgramm
         self.pid = aPid
-        self.status
-        self.priority = aPriority
-        self.pc = aPC
+        self.status= State.NEW
         self.dirBase = None
+        self.pc = 0
+        self.priority = aPriority
     
     def changeStatus(self, aNewStatus):
         self.status=aNewStatus
@@ -30,4 +31,15 @@ class PCB:
     def getInstruction(self):
         return self.id.getInstruction()
     
+    def nextDirInstruccion(self):
+        return self.dirBase+self.pc
     
+    def isProgramInMemory(self):
+        return self.id.isInMemory()
+    
+    def nextIsIO(self):
+        return self.id.nextIsIO(self.nextDirInstruccion())
+    
+    def runInstruccion(self):
+        self.status=State.RUNNING
+        return self.id.runInstruccion(self.nextDirInstruccion())
