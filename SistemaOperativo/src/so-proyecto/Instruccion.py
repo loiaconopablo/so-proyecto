@@ -7,4 +7,9 @@ class Instruccion:
                 
         def execute(self, aMemory):
              print(self.action)
+             
+        def isIO(self):
+            return False
+             
+        
                 
