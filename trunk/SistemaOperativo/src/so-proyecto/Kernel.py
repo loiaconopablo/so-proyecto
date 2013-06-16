@@ -6,9 +6,9 @@ from Scheduler.py import *
 
 class Kernel:
 
-    def __init__(self, cpu, policity, aMemory):
+    def __init__(self, aCpu, policity, aMemory):
 
-        self.processor = cpu
+        self.cpu = aCpu
         self.modeKernel = False  # comienza en modo usuario
         self.scheduler = Scheduler(policity)
         self.pcbCurrent = null

@@ -10,4 +10,4 @@ class State(Enum):
     NEW = "New"
     TERMINAED = "Terminated"
     RUNNING = "Running"
-    WAINTING = "Waiting"
+    WAITING = "Waiting"

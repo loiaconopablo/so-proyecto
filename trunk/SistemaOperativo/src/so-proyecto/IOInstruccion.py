@@ -4,9 +4,9 @@ Created on 10/06/2013
 @author: Pablo
 '''
 class IOInstruccion:
-        def __init__(self, aAction, IO , aDevice ):
-                self.action = aAction #Un String que diga algo para saber que se ejecuto
-                self.isIO = IO # Tiene que ser un bool que indique si es 
+        def __init__(self, aAction, IO , aDevice):
+                self.action = aAction  # Un String que diga algo para saber que se ejecuto
+                self.isIO = IO  # Tiene que ser un bool que indique si es 
                 self.device = aDevice
                 
         def execute(self, aMemory):
@@ -14,3 +14,7 @@ class IOInstruccion:
                 
         def getDevice(self):
             return self.device
+        
+        def isIO(self):
+            return True
+             

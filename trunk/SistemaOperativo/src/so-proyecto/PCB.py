@@ -27,9 +27,6 @@ class PCB:
     
     def setDirBase(self, aDirection):
         self.dirBase= aDirection   
-        
-    def getInstruction(self):
-        return self.id.getInstruction()
     
     def nextDirInstruccion(self):
         return self.dirBase+self.pc
@@ -38,8 +35,9 @@ class PCB:
         return self.id.isInMemory()
     
     def nextIsIO(self):
-        return self.id.nextIsIO(self.nextDirInstruccion())
-    
+        instruccion=self.memory.read(self.nextDirInstruccion())
+        return instruccion.isIO()
+
     def runInstruccion(self):
         self.status=State.RUNNING
         return self.id.runInstruccion(self.nextDirInstruccion())

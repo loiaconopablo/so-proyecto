@@ -13,6 +13,8 @@ class ManageIRQ:
         self.kernel.modoOn()
         self.kernel.handlerIO.handle(pcb)
         print("Se mando un proceso a la cola de I/O")
+        self.kernel.cpu.setPCB(None)
+        self.kernel.contextSwitch()
         self.kernel.modoOff()
 
     def killInterrupt(self, pcb):
@@ -29,13 +31,13 @@ class ManageIRQ:
         print("Se termino el tiempo de ejecuciòn del proceso actual")
         self.kernel.modoOff()
         
-    def nilInterrupt(self):
+    def nilInterrupt(self):  # Terminar de hacer
         self.kernel.modoOn()
         print("No hay mas programas en la QReady")
         self.handler.nilInterrupt()    
         self.kernel.modoOff()
         
-    def newInterrupt(self, program):
+    def newInterrupt(self, program):  # Terminar de hacer
         print("Entro un nuevo proceso")
         self.kernel.insertProcess(program)
         self.kernel.reschedule()    
