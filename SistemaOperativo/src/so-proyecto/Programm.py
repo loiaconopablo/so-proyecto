@@ -9,11 +9,11 @@ class Programm:
         
         def add(self, aObject):
                 self.instruction.append(aObject)
-
-        def run(self):
-                for i in self.instruction:
-                        i.execute(self.memory)
-
+        
+        def runInstruccion(self, aDirForInstruccion): 
+            instruccion=self.memory.read(aDirForInstruccion)
+            instruccion.execute()
+            
         def getSize(self):
             return len(self.instruction)
         

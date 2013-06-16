@@ -12,11 +12,11 @@ class Scheduler:
         return self.policity.next()
 
     def add(self, aPCB):
-        aPCB.changeStatus('Ready')
+        aPCB.changeStatus(State.READY)
         self.policity.add(aPCB)
         
     def retryAdd(self, aPCB):
-        aPCB.changeStatus('Ready')
+        aPCB.changeStatus(State.READY)
         self.policity.retryAdd(aPCB)
 
     def isEmpty(self):

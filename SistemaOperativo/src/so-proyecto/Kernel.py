@@ -33,7 +33,7 @@ class Kernel:
     def contextSwitch(self):
         self.modeOn() # coloco en modo kernel
         if self.cpu.pcbCurrent == null:  # #chequeo si el CPU finalizo el ultimo PCB o lo 
-            self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
+            self.setNextPcb()            # #  seteo en el pcb del CPU el proximo pcb
         else:
             self.returnToPcbTable()  # # vuelvo a poner el pcb en la cola qReady
             self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
