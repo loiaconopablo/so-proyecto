@@ -5,7 +5,8 @@ Created on 30/05/2013
 '''
 class LongScheduler:
     
-    def __init__(self):
-        self #IMPLEMENTAR
+    def __init__(self, aScheduler):
+        self.colaWait = []
+        self.scheduler = aScheduler
         
     

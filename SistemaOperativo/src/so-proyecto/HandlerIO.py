@@ -3,35 +3,19 @@ Created on 10/06/2013
 
 @author: Pablo
 '''
+from PCB import *
+from IOInstruccion import *
 
-class HandlerIO:  # preguntar si tiene que ser otro Thread mas
+class HandlerIO:  # preguntar si tiene que ser otro Thread mas, - Me dijo Marce que no es necesario, que lo pruebe igual.
     def __init__(self, aDeviceMange):
         self.deviceManage = aDeviceManage
-        self.task = []
-        
-    def getDevice(self, IOInstruction):
-        deviceIOInstruction = IOInstruction.getDevice()
-        return self.deviceManage.get(deviceIOInstruction)
-    
-    def handleIO(self, aPCB):
+            
+    def handleIO(self, aPCB , nextInstruccion):
         aPCB.changeStatus(State.WAITING)
-        self.task.append(aPCB)
-        
-    def run(self):
-        while(True):
-            sleep(1)
-            if self.hayTask():
-                aPCB = pop(self.task)
-                instruccion = self.getNextInstruction(aPCB.nextDirInstruccion())
-                self.getDevice(instruccion).run()##### hay que seguirlo
-            
-            
-    def getNextInstruction(self, nextDir):
-        self.deviceManage.get(Device.DISK)  # Crear un Enum para los dispositivos o ver como hacer
-        instruccion = self.memory.read(aDirForInstruccion)
-        return instruction
+        device = self.getDeviceName(nextInstruccion)
+        self.deviceManage.handle(device, aPCB, nextInstruccion)
     
-    def hayTask(self):
-        return len(self.task)
-            
+    def getDeviceName(self, IOInstruction):
+        return IOInstruction.getDeviceName()
+        
     
