@@ -6,12 +6,12 @@ Created on 20/05/2013
 from Kernel import *
 
 class ManageIRQ:
-    def __init__(self, aKernel):
+    def __init__(self, aKernel, aHandler):
             self.kernel = aKernel
         
-    def iOInterrupt(self, pcb):
+    def iOInterrupt(self, pcb , nextInstruccion):
         self.kernel.modoOn()
-        self.kernel.handlerIO.handle(pcb)
+        self.kernel.handlerIO.handle(pcb, nextInstruccion)
         print("Se mando un proceso a la cola de I/O")
         self.kernel.cpu.setPCB(None)
         self.kernel.contextSwitch()

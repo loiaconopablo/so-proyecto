@@ -11,7 +11,8 @@ class Kernel:
         self.cpu = aCpu
         self.modeKernel = False  # comienza en modo usuario
         self.scheduler = Scheduler(policity)
-        self.pcbCurrent = null
+        self.longScheduler = LongScheduler(scheduler)#revisar
+        self.pcbCurrent = None
         self.handlerIO = HandlerIO()
         self.memory = aMemory
         self.timer = Timer(self) 
@@ -45,9 +46,10 @@ class Kernel:
     def isModeKernel(self):
         return self.modeKernel
     
-    def addProcess(self, aProgramm):
-        self.manageIRQ.newInterrupt(aProgramm)
+    def addProcess(self, aProgramName):
+        self.manageIRQ.newInterrupt(aProgramName)
         
-    def insertProcess(self, aProgramm):
-        self #hacer
+    def insertProcess(self, aProgramName):
+        self #Continuar
+
         

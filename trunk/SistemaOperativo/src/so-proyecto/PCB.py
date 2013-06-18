@@ -34,10 +34,6 @@ class PCB:
     def isProgramInMemory(self):
         return self.id.isInMemory()
     
-    def nextIsIO(self):
-        instruccion=self.memory.read(self.nextDirInstruccion())
-        return instruccion.isIO()
-
     def runInstruccion(self):
         self.status=State.RUNNING
         return self.id.runInstruccion(self.nextDirInstruccion())

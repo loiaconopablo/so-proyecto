@@ -1,6 +1,9 @@
 '''
 @author: Pablo
 '''
+from Instruccion import *
+from IOInstruccion import *
+from Kernel import *
 
 class CPU:
 
@@ -24,22 +27,26 @@ class CPU:
               #     self.killInterrupt(self.pcbCurrent)
 
     def runInstruccion(self):
-        if self.nextIsIO(): # Validar (si es una instruccion de I/O) para hacer una IRQ
-            self.iOInterrupt(self.pcbCurrent)
+        nextInstruccion = self.readInstruccion()
+        if self.nextIsIO(nextInstruccion): # Validar (si es una instruccion de I/O) para hacer una IRQ
+            self.iOInterrupt(self.pcbCurrent, nextInstruccion)
             #EL PC LO INCREMENTA LUEGO DE EL HANDLER IO EJECUTE LA INSTRUCCION
         else:
-            instruccion = self.mmu.read(aDirForInstruccion)
-            instruccion.execute()
+            nextInstruccion.execute()
             self.pcbCurrent.increasePc()
     
     def hayPCB(self):
         return self.pcbCurrent != None
-
-    def nextIsIO(self):
-        return self.pcbCurrent.nextIsIO()
                    
-    def iOInterrupt(self, aPCB):
-        self.kernel.manageIRQ.iOInterrupt(aPCB)
+    def iOInterrupt(self, aPCB , nextInstruccion):
+        self.kernel.manageIRQ.iOInterrupt(aPCB, nextInstruccion)
+        
+    def readInstruccion(self):
+        instruccion=self.memory.read(self.nextDirInstruccion())
+        return instruccion.isIO()
+
+    def nextIsIO(self, instruccion):
+        return instruccion.isIO()
 
     def killInterrupt(self, aPCB):
         self.kernel.manageIRQ.killInterrupt(aPCB)
