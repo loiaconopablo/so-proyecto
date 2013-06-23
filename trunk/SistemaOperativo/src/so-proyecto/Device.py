@@ -10,11 +10,11 @@ import time
 
 class Device:
     __metaclass__ = ABCMeta  # la define como claseAbstracta
+    self.listTask = []
     
-    @abc.abstractclassmethod
     def run(self):
         while(True):
-            time.sleep(1)
+            time.sleep(2)
             if self.hayTask():
                 tupla = pop(self.task)
                 aPCB = tupla[0]
@@ -22,35 +22,24 @@ class Device:
                 aPCB.changeStatus(State.RUNNING)
                 nextInstruccion.execute()
                 time.sleep(5)   #Simula el tiempo que tarda el dispositivo en ejecutar la 
-                                #instruccion
+                aPCB.changeStatus(State.Ready) #instruccion
+                
 
-    def value_getter(self):
-        return 'Should never see this'
+    def setListTask(self, newvalue):
+       self.listTask = newvalue
     
-    def value_setter(self, newvalue):
-        return
-
-    listTask = abc.abstractproperty(value_getter, value_setter)
+    def getListTaks(self, newvalue):
+        return self.listTask
 
     @abc.abstractclassmethod
     def addTask(self, aPCB, nextInstruccion):
-        tupla= (aPCB,nextInstruccion)
+        tupla = (aPCB,nextInstruccion)
         self.value_getter().append(tupla)
         
     def hayTask(self):
         return len(self.value_getter())>0
 
 class Printer(Device):
-    _listTask = []
-    
-    def value_getter(self):
-        return self._listTask
+   pass
 
-    def value_setter(self, newvalue):
-        self._listTask = newvalue
-    
-    def addTask(self, aTask):
-        self._listTask.append(aTask)
-
-    value = property(value_getter, value_setter)
     

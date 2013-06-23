@@ -20,3 +20,7 @@ class RoundRobin:
     
     def isRR(self):
         return True 
+    
+    def getQuantum(self):
+        return self.quantum
+
