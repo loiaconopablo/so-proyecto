@@ -4,6 +4,8 @@ Created on 21/05/2013
 @author: Pablo Loiacono
 '''
 from Timer import *
+import time
+
 
 class Clock(Thread):
 
@@ -13,7 +15,7 @@ class Clock(Thread):
 
     def run(self):
         while (True):
-            sleep(1)
+            time.sleep(1)
             self.timer.run()
 
                

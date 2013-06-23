@@ -12,10 +12,7 @@ class HandlerIO:  # preguntar si tiene que ser otro Thread mas, - Me dijo Marce 
             
     def handleIO(self, aPCB , nextInstruccion):
         aPCB.changeStatus(State.WAITING)
-        device = self.getDeviceName(nextInstruccion)
+        device = self.nextInstruccion.getDeviceName()
         self.deviceManage.handle(device, aPCB, nextInstruccion)
-    
-    def getDeviceName(self, IOInstruction):
-        return IOInstruction.getDeviceName()
         
     

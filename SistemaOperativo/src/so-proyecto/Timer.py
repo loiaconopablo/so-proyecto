@@ -5,12 +5,13 @@ Created on 18/05/2013
 @author: Pablo
 '''
 from Kernel import *
+from ManageIRQ import *
 
 class Timer:
     def __init__(self, aKernel):
         self.quantum = aKernel.scheduler.quamtum()
         self.currentQuantum = self.quantum
-        self.clock = Clock()
+        self.clock = Clock(self)
         self.kernel = aKernel
 
     def decreasedQuamtum(self):

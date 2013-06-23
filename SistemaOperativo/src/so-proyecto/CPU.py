@@ -4,12 +4,14 @@
 from Instruccion import *
 from IOInstruccion import *
 from Kernel import *
+from ManageIRQ import *
+from PCB import *
 
 class CPU:
 
-    def __init__(self, kernel):
-        self.kernel = kernel
-        self.mmu = memory
+    def __init__(self, aKernel, aMemory):
+        self.kernel = aKernel
+        self.mmu = aMemory
         self.pc = 0
         self.pcbCurrent = None
         self.timer = Timer()
@@ -17,14 +19,14 @@ class CPU:
 
     def fetchInstruction(self,):
         if self.hayPCB():
-            if self.pcbCurrent.isInMemory():
+            if self.pcbCurrent.isProgramInMemory():
                 self.runInstruccion()              
             else:
                 self.mmu.saveInMemory(self.pcbCurrent)#carga el programa en memoria
-                self.runInstruccion()
             self.isLastInstruccion()
-              #  if (preguntar si es la ultima instruccion)): Armar condicion bien
-              #     self.killInterrupt(self.pcbCurrent)
+            
+    def hayPCB(self):
+        return self.pcbCurrent != None          
 
     def runInstruccion(self):
         nextInstruccion = self.readInstruccion()
@@ -32,21 +34,24 @@ class CPU:
             self.iOInterrupt(self.pcbCurrent, nextInstruccion)
             #EL PC LO INCREMENTA LUEGO DE EL HANDLER IO EJECUTE LA INSTRUCCION
         else:
+            self.pcbCurrent.changeStatus(State.RUNNING)
             nextInstruccion.execute()
             self.pcbCurrent.increasePc()
+            self.pcbCurrent.changeStatus(State.READY)#Analizar si es necesario
     
-    def hayPCB(self):
-        return self.pcbCurrent != None
-                   
-    def iOInterrupt(self, aPCB , nextInstruccion):
-        self.kernel.manageIRQ.iOInterrupt(aPCB, nextInstruccion)
-        
     def readInstruccion(self):
-        instruccion=self.memory.read(self.nextDirInstruccion())
-        return instruccion.isIO()
+        instruccion=self.mmu.read(self.pcbCurrent.nextDirInstruccion())
+        return instruccion
 
     def nextIsIO(self, instruccion):
         return instruccion.isIO()
+
+    def isLastInstruccion(self):
+        if  self.pcbCurrent.isLastInstruccion():
+            self.killInterrupt(self.pcbCurrent)
+                   
+    def iOInterrupt(self, aPCB , nextInstruccion):
+        self.kernel.manageIRQ.iOInterrupt(aPCB, nextInstruccion)
 
     def killInterrupt(self, aPCB):
         self.kernel.manageIRQ.killInterrupt(aPCB)

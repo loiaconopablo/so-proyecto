@@ -6,6 +6,7 @@ Created on 17/06/2013
 import abc
 from PCB import *
 from State import *
+import time
 
 class Device:
     __metaclass__ = ABCMeta  # la define como claseAbstracta
@@ -13,13 +14,15 @@ class Device:
     @abc.abstractclassmethod
     def run(self):
         while(True):
-            sleep(1)
+            time.sleep(1)
             if self.hayTask():
-                aPCB = pop(self.task)
-                instruccion = aPCB.nextDirInstruccion()#CONTINUAR
+                tupla = pop(self.task)
+                aPCB = tupla[0]
+                nextInstruccion=tupla[1]
                 aPCB.changeStatus(State.RUNNING)
-               
-                print()
+                nextInstruccion.execute()
+                time.sleep(5)   #Simula el tiempo que tarda el dispositivo en ejecutar la 
+                                #instruccion
 
     def value_getter(self):
         return 'Should never see this'
@@ -30,8 +33,10 @@ class Device:
     listTask = abc.abstractproperty(value_getter, value_setter)
 
     @abc.abstractclassmethod
-    def addTask(self):
-        self 
+    def addTask(self, aPCB, nextInstruccion):
+        tupla= (aPCB,nextInstruccion)
+        self.value_getter().append(tupla)
+        
     def hayTask(self):
         return len(self.value_getter())>0
 

@@ -6,6 +6,8 @@ Created on 15/06/2013
 from PCB import *
 from Device import *
 
+
+
 class DeviceManager:
     def __init__(self):
         self.devices = {}
@@ -17,4 +19,7 @@ class DeviceManager:
     def handle(self, aDevice , aPCB, nextInstruccion):
         device = self.get(aDevice)
         device.addTask(aPCB, nextInstruccion)
-        
+
+    
+            
+            

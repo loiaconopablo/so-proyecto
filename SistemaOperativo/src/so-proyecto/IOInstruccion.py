@@ -9,7 +9,7 @@ class IOInstruccion:
                 self.deviceName = aDeviceName
                 
         def execute(self, aMemory):
-             print(self.action)
+             print(self.action + "Ejecutado en" + self.deviceName)
                 
         def getDeviceName(self):
             return self.deviceName

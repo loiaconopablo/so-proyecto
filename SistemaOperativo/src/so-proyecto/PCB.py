@@ -2,6 +2,7 @@
 @author: Pablo
 '''
 from State import *
+from Programm import *
 
 class PCB:
 #Process Control Block
@@ -34,6 +35,6 @@ class PCB:
     def isProgramInMemory(self):
         return self.id.isInMemory()
     
-    def runInstruccion(self):
-        self.status=State.RUNNING
-        return self.id.runInstruccion(self.nextDirInstruccion())
+    def isLastInstruccion(self):
+        return (self.pc == self.getSize())
+    
