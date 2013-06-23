@@ -4,6 +4,7 @@ Created on 20/05/2013
 @author: Pablo
 '''
 from Kernel import *
+from CPU import *
 
 class ManageIRQ:
     def __init__(self, aKernel, aHandler):
@@ -20,7 +21,7 @@ class ManageIRQ:
     def killInterrupt(self, pcb):
         self.kernel.modoOn()
         self.kernel.pcbFinish.append(self.kernel.cpu.getPCB())  # se guarda el pcb finalizado en la lista.
-        self.kernel.cpu.pcb = null  # borrar el pcb terminado
+        self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
         print("Finalizo el proceso actual")
         self.kernel.contextSwitch()
         self.kernel.modoOff()
@@ -31,10 +32,9 @@ class ManageIRQ:
         print("Se termino el tiempo de ejecuciòn del proceso actual")
         self.kernel.modoOff()
         
-    def nilInterrupt(self):  # Terminar de hacer
+    def nilInterrupt(self):
         self.kernel.modoOn()
         print("No hay mas programas en la QReady")
-        self.handler.nilInterrupt()    
         self.kernel.modoOff()
         
     def newInterrupt(self, program):  # Terminar de hacer
