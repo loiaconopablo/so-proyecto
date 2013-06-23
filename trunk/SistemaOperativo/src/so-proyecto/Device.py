@@ -24,6 +24,7 @@ class Device:
                 time.sleep(5)   #Simula el tiempo que tarda el dispositivo en ejecutar la 
                 aPCB.changeStatus(State.Ready) #instruccion
                 
+                #Preguntar como hacer para que avise que termino de ejecutar la instruccion, a quien titne que conocer
 
     def setListTask(self, newvalue):
        self.listTask = newvalue
