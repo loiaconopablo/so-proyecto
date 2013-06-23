@@ -1,3 +1,4 @@
+
 class Priority:
 
     def __init__(self):
@@ -18,3 +19,4 @@ class Priority:
    
     def isRR(self):
         return False
+

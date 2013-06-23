@@ -4,6 +4,8 @@
 from Fifo import *
 from RoundRobin import *
 from Priority import *
+from FifoWithRR import *
+from PriorityWithRR import *
 
 class Scheduler:
 
@@ -31,7 +33,7 @@ class Scheduler:
     
     def quamtum(self):
         if self.policity.isRR():
-            return self.policity.quantum
+            return self.policity.getQuantum()
         else: return 10
         
     
