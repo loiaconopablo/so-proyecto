@@ -2,9 +2,10 @@
 @author: Pablo
 '''
 
-class Programm:
-        def __init__(self):
+class Program:
+        def __init__(self, aName):
                 self.instruction = []
+                self.programName = aName()
                 self.memory = False
         
         def add(self, aObject):
@@ -21,6 +22,9 @@ class Programm:
             
         def outMemory(self):
             self.memory = False
+            
+        def getName(self):
+            return self.programName
             
             
             

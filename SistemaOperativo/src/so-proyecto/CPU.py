@@ -60,4 +60,4 @@ class CPU:
         self.pcbCurrent = aPCB
         
     def getPCB(self):
-        return self.pcbCurrent
+        return self.pcbCurrent(P)

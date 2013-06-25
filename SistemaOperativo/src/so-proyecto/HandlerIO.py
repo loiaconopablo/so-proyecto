@@ -7,7 +7,7 @@ from PCB import *
 from IOInstruccion import *
 
 class HandlerIO:  # preguntar si tiene que ser otro Thread mas, - Me dijo Marce que no es necesario, que lo pruebe igual.
-    def __init__(self, aDeviceMange):
+    def __init__(self, aDeviceManage):
         self.deviceManage = aDeviceManage
             
     def handleIO(self, aPCB , nextInstruccion):

@@ -6,6 +6,7 @@ Created on 18/05/2013
 '''
 from Kernel import *
 from ManageIRQ import *
+from Clock import *
 
 class Timer:
     def __init__(self, aKernel):
@@ -13,6 +14,12 @@ class Timer:
         self.currentQuantum = self.quantum
         self.clock = Clock(self)
         self.kernel = aKernel
+    
+    def initializeThread(self):
+        self.clock.start()
+    
+    def downThread(self):
+        self #Ver como doy de baja los threads
 
     def decreasedQuamtum(self):
         self.currentQuantum = self.currentQuantum - 1

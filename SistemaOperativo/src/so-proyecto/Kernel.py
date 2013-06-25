@@ -5,6 +5,7 @@
 from Scheduler.py import *
 from CPU import *
 from ManageIRQ import *
+from Program import *
 
 class Kernel:
 
@@ -12,8 +13,8 @@ class Kernel:
 
         self.cpu = CPU(self, aMemory )
         self.modeKernel = False  # comienza en modo usuario
-        self.scheduler = Scheduler(policity, self)
-        self.longScheduler = LongScheduler(scheduler)#revisar
+        self.scheduler = ShortScheduler(policity, self)
+        self.longScheduler = LongScheduler(self, policity)#revisar
         self.pcbCurrent = None
         self.handlerIO = HandlerIO()
         self.memory = aMemory
@@ -22,7 +23,12 @@ class Kernel:
         self.manageIRQ = ManageIRQ(self)
         
     # def run(self):
-
+    def initializeThread(self):
+        self # Inicializar todos los threads
+    
+    def downThread(self):
+        self #ver como bajar todos los threasd
+            
     def modeOn(self):  # lo pone en modo kernel
         self.modeKernel = True  
 
@@ -31,7 +37,6 @@ class Kernel:
         
     def setNextPcb(self):
         self.cpu.setPCB(self.scheduler.next())
-
 
     def contextSwitch(self):
         self.modeOn() # coloco en modo kernel
@@ -49,9 +54,10 @@ class Kernel:
         return self.modeKernel
     
     def addProcess(self, aProgramName):
-        self.manageIRQ.newInterrupt(aProgramName)
+        self.manageIRQ.newInterrupt(aProgram)
         
     def insertProcess(self, aProgramName):
-        self #Continuar
+        PCB = PCB(aProgramName)
+        self.longScheduler.handle(PCB)
 
         
