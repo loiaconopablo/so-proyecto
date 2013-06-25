@@ -7,24 +7,28 @@ import abc
 from PCB import *
 from State import *
 import time
+import threading
 
-class Device:
-    __metaclass__ = ABCMeta  # la define como claseAbstracta
-    self.listTask = []
+
+class Device(threading.Thread):
+    def __init__(self, aDeviceManager):
+        self.listTask = []
+        self.deviceManger= aDeviceManager
+        threading.Thread.__init__(self)
     
     def run(self):
+        print("Estoy corriendo")#ver depsues
         while(True):
             time.sleep(2)
             if self.hayTask():
-                tupla = pop(self.task)
+                tupla = self.listTask.pop(0)
                 aPCB = tupla[0]
                 nextInstruccion=tupla[1]
                 aPCB.changeStatus(State.RUNNING)
                 nextInstruccion.execute()
                 time.sleep(5)   #Simula el tiempo que tarda el dispositivo en ejecutar la 
                 aPCB.changeStatus(State.Ready) #instruccion
-                
-                #Preguntar como hacer para que avise que termino de ejecutar la instruccion, a quien titne que conocer
+                self.deviceManger.end(aPCB)
 
     def setListTask(self, newvalue):
        self.listTask = newvalue

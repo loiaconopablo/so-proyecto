@@ -5,6 +5,8 @@ Created on 20/05/2013
 '''
 from Kernel import *
 from CPU import *
+from HandlerIO import *
+from PCB import *
 
 class ManageIRQ:
     def __init__(self, aKernel, aHandler):
@@ -22,6 +24,7 @@ class ManageIRQ:
         self.kernel.modoOn()
         self.kernel.pcbFinish.append(self.kernel.cpu.getPCB())  # se guarda el pcb finalizado en la lista.
         self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
+        self.kernel.memory.release(pcb) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB. HACER!!!!!
         print("Finalizo el proceso actual")
         self.kernel.contextSwitch()
         self.kernel.modoOff()
@@ -39,7 +42,6 @@ class ManageIRQ:
         
     def newInterrupt(self, program):  # Terminar de hacer
         print("Entro un nuevo proceso")
-        self.kernel.insertProcess(program)
-        self.kernel.reschedule()    
+        self.kernel.insertProcess(program)  
             
         

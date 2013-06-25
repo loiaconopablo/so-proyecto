@@ -2,13 +2,14 @@
 @author: Pablo
 '''
 from State import *
-from Programm import *
+from Program import *
+import uuid
 
 class PCB:
 #Process Control Block
-    def __init__(self,aProgramm, aPid, aPriority=10):
-        self.id = aProgramm
-        self.pid = aPid
+    def __init__(self,aProgramName, aPriority=10):
+        self.id = aProgramName
+        self.pid = uuid.uuid4() # Genera un número - Generate a random UUID
         self.status= State.NEW
         self.dirBase = None
         self.pc = 0
@@ -38,3 +39,8 @@ class PCB:
     def isLastInstruccion(self):
         return (self.pc == self.getSize())
     
+    def getNameProgram(self): # por ahora no se usa
+        return self.id.getName()
+    
+    def setProgram(self, aProgram):
+        self.id = aProgram
