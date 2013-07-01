@@ -11,10 +11,10 @@ class MemPolicitity:
      
     @abc.abstractclassmethod
     def savePCB(self, aFreeListBlock, aPCB):
-        self                            
+        pass                        
     @abc.abstractclassmethod
     def choiseBlock(self, aFreeListBlock, sizePCB):
-        self
+        pass
     
     def isFreeBlockTo(self, aFreeListBlock, aSize): # preguntar si al heredar lo utilizan
         for block in aFreeListBlock:

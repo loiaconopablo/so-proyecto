@@ -6,13 +6,19 @@ from RoundRobin import *
 from Priority import *
 from FifoWithRR import *
 from PriorityWithRR import *
+from Disk import *
+from Kernel import *
 
 class SchedulerAbstract:
 
     def __init__(self, aPolicity, aKernel):
-       #Cada politica guarda la lista de listos : self.qReady = []
-        self.policity = aPolicity
-        self.kernel = aKernel
+        if type(self) is SchedulerAbstract:
+            raise NotImplementedError('Can\'t instantiate class `' + \
+                                      cls.__name__ + '\';\n')
+        else:
+        #Cada politica guarda la lista de listos : self.qReady = []
+            self.policity = aPolicity
+            self.kernel = aKernel
         
     def next(self):
         if not self.isEmpty:
@@ -21,10 +27,10 @@ class SchedulerAbstract:
             self.kernel.manageIRQ.nilInterrupt()
     
     def add(self, aPCB):
-        self
+        pass
         
     def retryAdd(self, aPCB):
-        self
+        pass
 
     def isEmpty(self):
         return len(self.policity.qReady) == 0
@@ -35,7 +41,7 @@ class SchedulerAbstract:
         else: return 10
 
 class ShortScheduler(SchedulerAbstract):
-    def __init__(self, SchedulerAbstract, aPolicity, aKernel):
+    def __init__(self, SchedulerAbstract, aPolicity, aKernel):     
         SchedulerAbstract.__init__(self, aPolicity, aKernel)
        
     def add(self, aPCB):
@@ -60,16 +66,23 @@ class LongScheduler(SchedulerAbstract):
         self.policity.retryAdd(aPCB)
 
     def handle(self, aPCB):
-        aPCB.setProgram(self.kernel.disk.get(aPCB.id))
+        if self.kernel.disk.isInDisk(aPCB.getNameProgram()):
+            aPCB.setProgram(self.kernel.disk.get(aPCB.id))
+            self.saveInMemory(aPCB)
+            self.kernel.scheduler.add(aPCB)
+        else:
+            self.saveInMemory(aPCB)
+            self.kernel.scheduler.add(aPCB)
+
+    def saveInMemory(self, aPCB):
         if self.kernel.memory.isFreeBlockTo(aPCB):
             self.kernel.memory.saveInMemory(aPCB)
         else:
             self.add(aPCB)
 
-    def checkForSpace(self): #Verificar si es necesario
+    def checkForSpace(self):
         if self.hayWaiting():
-            self.handle(self.colaWait.pop(0))
+            self.handle(self.colaWait.pop(0))  
         
     def hayWaiting(self): #Verificar
         return len(colaWait)>0    
-
