@@ -26,6 +26,7 @@ class ManageIRQ:
         self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
         self.kernel.memory.release(pcb) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB. HACER!!!!!
         print("Finalizo el proceso actual")
+        self.kernel.longScheduler.checkForSpace()#Si hay pcb en la lista de espera
         self.kernel.contextSwitch()
         self.kernel.modoOff()
         

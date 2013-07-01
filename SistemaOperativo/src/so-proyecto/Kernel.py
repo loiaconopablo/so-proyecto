@@ -6,6 +6,7 @@ from Scheduler.py import *
 from CPU import *
 from ManageIRQ import *
 from Program import *
+from PCB import *
 
 class Kernel:
 
@@ -14,13 +15,14 @@ class Kernel:
         self.cpu = CPU(self, aMemory )
         self.modeKernel = False  # comienza en modo usuario
         self.scheduler = ShortScheduler(policity, self)
-        self.longScheduler = LongScheduler(self, policity)#revisar
+        self.longScheduler = LongScheduler(policity, self)#revisar
         self.pcbCurrent = None
         self.handlerIO = HandlerIO()
         self.memory = aMemory
         self.timer = Timer(self) 
         self.pcbFinish = []
         self.manageIRQ = ManageIRQ(self)
+        self.disk = Disk()
         
     # def run(self):
     def initializeThread(self):
@@ -59,5 +61,4 @@ class Kernel:
     def insertProcess(self, aProgramName):
         PCB = PCB(aProgramName)
         self.longScheduler.handle(PCB)
-
         
