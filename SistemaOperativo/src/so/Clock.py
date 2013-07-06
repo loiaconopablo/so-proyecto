@@ -3,7 +3,7 @@ Created on 21/05/2013
 
 @author: Pablo Loiacono
 '''
-from Timer.py import *
+
 import time
 import threading
 

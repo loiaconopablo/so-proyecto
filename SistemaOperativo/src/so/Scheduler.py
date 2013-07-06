@@ -1,20 +1,11 @@
 '''
 @author: Pablo
 '''
-from Fifo import *
-from RoundRobin import *
-from Priority import *
-from FifoWithRR import *
-from PriorityWithRR import *
-from Disk import *
-from Kernel import *
-
 class SchedulerAbstract:
 
     def __init__(self, aPolicity, aKernel):
         if type(self) is SchedulerAbstract:
-            raise NotImplementedError('Can\'t instantiate class `' + \
-                                      cls.__name__ + '\';\n')
+            raise NotImplementedError('Can\'t instantiate class `' + \cls.__name__ + '\';\n')
         else:
         #Cada politica guarda la lista de listos : self.qReady = []
             self.policity = aPolicity
@@ -82,7 +73,7 @@ class LongScheduler(SchedulerAbstract):
 
     def checkForSpace(self):
         if self.hayWaiting():
-            self.handle(self.colaWait.pop(0))  
+            self.handle(self.policity.next)  
         
-    def hayWaiting(self): #Verificar
-        return len(colaWait)>0    
+    def hayWaiting(self): 
+        return len(self.policity.qReady) > 0    
