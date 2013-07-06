@@ -11,7 +11,7 @@ class Disk:
         self.listOfProgram[aProgram.getName()] = aProgram
     
     def get(self, aNameOfProgram):
-        return self.listOfProgram[aNameOfProgram]
+        return (self.listOfProgram[aNameOfProgram])
     
     def isInDisk(self, aNameOfProgram):
         #=======================================================================
