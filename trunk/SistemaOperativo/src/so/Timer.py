@@ -1,12 +1,9 @@
-#Testeando el PyDev y commit!!!
 '''
 Created on 18/05/2013
 
 @author: Pablo
 '''
-from Kernel.py import *
-from ManageIRQ.py import *
-from Clock.py import *
+from Clock import *
 
 class Timer:
     def __init__(self, aKernel):

@@ -1,13 +1,8 @@
 '''
 @author: Pablo
 '''
-from Instruccion.py import *
-from IOInstruccion.py import *
-from Kernel.py import *
-from ManageIRQ.py import *
-from PCB.py import *
-from Timer.py import *
-from State.py import *
+from Timer import *
+from State import *
 
 class CPU:
 
@@ -62,4 +57,4 @@ class CPU:
         self.pcbCurrent = aPCB
         
     def getPCB(self):
-        return self.pcbCurrent(P)
+        return self.pcbCurrent()

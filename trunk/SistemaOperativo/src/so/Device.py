@@ -4,7 +4,6 @@ Created on 17/06/2013
 @author: Pablo
 '''
 import abc
-from PCB import *
 from State import *
 import time
 import threading
@@ -32,7 +31,7 @@ class Device(threading.Thread):
                 self.deviceManger.end(aPCB)
 
     def setListTask(self, newvalue):
-       self.listTask = newvalue
+        self.listTask = newvalue
     
     def getListTaks(self, newvalue):
         return self.listTask
@@ -46,6 +45,6 @@ class Device(threading.Thread):
         return len(self.value_getter())>0
 
 class Printer(Device):
-   pass
+    pass
 
     

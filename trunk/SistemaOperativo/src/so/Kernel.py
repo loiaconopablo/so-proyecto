@@ -2,11 +2,12 @@
 @author: Pablo
 '''
 
-from Scheduler.py import *
-from CPU.py import *
-from ManageIRQ.py import *
-from Program.py import *
-from PCB.py import *
+from Scheduler import *
+from CPU import *
+from ManageIRQ import *
+from Program import *
+from PCB import *
+from Timer import *
 
 class Kernel:
 
@@ -58,6 +59,6 @@ class Kernel:
         self.manageIRQ.newInterrupt(aProgramName)
         
     def insertProcess(self, aProgramName):
-        PCB = PCB(aProgramName)
-        self.longScheduler.handle(PCB)
+        self.PCB = self.PCB(aProgramName)
+        self.longScheduler.handle(self.PCB)
         
