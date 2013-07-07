@@ -3,8 +3,8 @@ Created on 23/06/2013
 
 @author: Pablo Loiacono
 '''
-from RoundRobin.py import *
-from Priority.py import *
+from RoundRobin import *
+from Priority import *
 
 class PriorityWithRR(Priority, RoundRobin):
     def __init__(self, aQuamtum):

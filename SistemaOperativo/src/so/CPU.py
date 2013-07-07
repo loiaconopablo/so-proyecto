@@ -6,9 +6,8 @@ from State import *
 
 class CPU:
 
-    def __init__(self, aKernel, aMemory):
+    def __init__(self, aKernel):
         self.kernel = aKernel
-        self.mmu = aMemory
         self.pc = 0
         self.pcbCurrent = None
         self.timer = Timer()
@@ -19,7 +18,7 @@ class CPU:
             if self.pcbCurrent.isProgramInMemory():
                 self.runInstruccion()              
             else:
-                self.mmu.saveInMemory(self.pcbCurrent)#carga el programa en memoria
+                self.kernel.mmusaveInMemory(self.pcbCurrent)#carga el programa en memoria
             self.isLastInstruccion()
             
     def hayPCB(self):
@@ -37,7 +36,7 @@ class CPU:
             self.pcbCurrent.changeStatus(State.READY)#Analizar si es necesario
     
     def readInstruccion(self):
-        instruccion=self.mmu.read(self.pcbCurrent.nextDirInstruccion())
+        instruccion=self.kernel.mmu.read(self.pcbCurrent.nextDirInstruccion())
         return instruccion
 
     def nextIsIO(self, instruccion):

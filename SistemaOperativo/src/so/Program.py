@@ -26,5 +26,7 @@ class Program:
         def getName(self):
             return self.programName
             
+        def getInstruction(self):
+            return self.instruction
             
             

@@ -2,7 +2,7 @@
 @author: Pablo
 '''
 from State import *
-from Program.py import *
+from Program import *
 import uuid
 
 class PCB:
@@ -39,8 +39,11 @@ class PCB:
     def isLastInstruccion(self):
         return (self.pc == self.getSize())
     
-    def getNameProgram(self): # por ahora no se usa
+    def getNameProgram(self):
         return self.id.getName()
     
     def setProgram(self, aProgram):
         self.id = aProgram
+        
+    def getInstruction(self):
+        return self.id.getInstruction()

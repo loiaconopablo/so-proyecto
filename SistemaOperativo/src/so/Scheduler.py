@@ -1,11 +1,12 @@
 '''
 @author: Pablo
 '''
+from State import *
 class SchedulerAbstract:
 
     def __init__(self, aPolicity, aKernel):
         if type(self) is SchedulerAbstract:
-            raise NotImplementedError('Can\'t instantiate class `' + \cls.__name__ + '\';\n')
+            raise NotImplementedError('Can\'t instantiate class ')
         else:
         #Cada politica guarda la lista de listos : self.qReady = []
             self.policity = aPolicity
@@ -46,7 +47,7 @@ class ShortScheduler(SchedulerAbstract):
 class LongScheduler(SchedulerAbstract):
     
     def __init__(self, SchedulerAbstract, aPolicity, aKernel):
-        SchedulerAbstract.__init__(self, aPolicity, None)
+        SchedulerAbstract.__init__(self, aPolicity, aKernel)
         
     def add(self, aPCB):
         aPCB.changeStatus(State.WAITING)
@@ -56,20 +57,20 @@ class LongScheduler(SchedulerAbstract):
         aPCB.changeStatus(State.WAITING)
         self.policity.retryAdd(aPCB)
 
+
+    def saveInMemory(self, aPCB):
+        if (self.kernel.mmu.freeSize() >= aPCB.size()):
+            self.kernel.mmu.saveInMemory(aPCB)
+            self.kernel.shortScheduler.add(aPCB)
+        else:
+            self.add(aPCB)
+
     def handle(self, aPCB):
         if self.kernel.disk.isInDisk(aPCB.getNameProgram()):
             aPCB.setProgram(self.kernel.disk.get(aPCB.id))
             self.saveInMemory(aPCB)
-            self.kernel.scheduler.add(aPCB)
         else:
             self.saveInMemory(aPCB)
-            self.kernel.scheduler.add(aPCB)
-
-    def saveInMemory(self, aPCB):
-        if self.kernel.memory.isFreeBlockTo(aPCB):
-            self.kernel.memory.saveInMemory(aPCB)
-        else:
-            self.add(aPCB)
 
     def checkForSpace(self):
         if self.hayWaiting():
