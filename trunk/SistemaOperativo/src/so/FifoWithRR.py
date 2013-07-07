@@ -3,8 +3,8 @@ Created on 23/06/2013
 
 @author: Pablo Loiacono
 '''
-from RoundRobin.py import *
-from Fifo.py import *
+from RoundRobin import *
+from Fifo import *
 
 class FifoWithRR(Fifo, RoundRobin):
     def __init__(self, aQuamtum):

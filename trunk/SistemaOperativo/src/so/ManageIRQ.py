@@ -43,6 +43,6 @@ class ManageIRQ:
         
     def newInterrupt(self, aProgramName):  
         print("Entro un nuevo proceso")
-        self.kernel.insertProcess(program)  
+        self.kernel.insertProcess(aProgramName)  
             
         

@@ -14,13 +14,6 @@ class Disk:
         return (self.listOfProgram[aNameOfProgram])
     
     def isInDisk(self, aNameOfProgram):
-        #=======================================================================
-        # result = False
-        # for prog in self.listOfProgram:
-        #     if prog.getName() == aNameOfProgram:
-        #         result = True
-        #         break
-        #=======================================================================
         if aNameOfProgram in self.listOfProgram:
             return True
         else:

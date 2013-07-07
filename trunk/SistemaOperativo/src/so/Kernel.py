@@ -8,17 +8,18 @@ from ManageIRQ import *
 from Program import *
 from PCB import *
 from Timer import *
+from Disk import *
 
 class Kernel:
 
-    def __init__(self, policity, aMemory):
-        self.cpu = CPU(self, aMemory )
+    def __init__(self, policity, aMMU):
+        self.cpu = CPU(self)
         self.modeKernel = False  # comienza en modo usuario
-        self.scheduler = ShortScheduler(policity, self)
+        self.shortScheduler = ShortScheduler(policity, self)
         self.longScheduler = LongScheduler(policity, self)#revisar
         self.pcbCurrent = None
         self.handlerIO = HandlerIO()
-        self.memory = aMemory
+        self.mmu = aMMU #Realizar
         self.timer = Timer(self) 
         self.pcbFinish = []
         self.manageIRQ = ManageIRQ(self)
@@ -38,7 +39,7 @@ class Kernel:
         self.modeKernel = False
         
     def setNextPcb(self):
-        self.cpu.setPCB(self.scheduler.next())
+        self.cpu.setPCB(self.shortScheduler.next())
 
     def contextSwitch(self):
         self.modeOn() # coloco en modo kernel
@@ -50,7 +51,7 @@ class Kernel:
         self.modoOff() #vuelvo al modo usuario
         
     def returnToPcbTable(self):
-        self.scheduler.retryAdd(self.cpu.pcbCurrent)
+        self.shortScheduler.retryAdd(self.cpu.pcbCurrent)
 
     def isModeKernel(self):
         return self.modeKernel

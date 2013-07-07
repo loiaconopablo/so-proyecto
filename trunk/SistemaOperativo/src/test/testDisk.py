@@ -16,7 +16,6 @@ class TestDisk(unittest.TestCase):
         self.progrA = Program("Program1")
         self.progrB = Program("Program5")
 
-
     def tearDown(self):
         pass
     
