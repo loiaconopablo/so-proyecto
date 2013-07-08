@@ -3,13 +3,14 @@ Created on 10/06/2013
 
 @author: Pablo
 '''
-from PCB.py import *
-from IOInstruccion.py import *
-from State.py import *
+from PCB import *
+from IOInstruccion import *
+from State import *
+from DeviceManager import *
 
 class HandlerIO:  # preguntar si tiene que ser otro Thread mas, - Me dijo Marce que no es necesario, que lo pruebe igual.
-    def __init__(self, aDeviceManage):
-        self.deviceManage = aDeviceManage
+    def __init__(self, aManageIRQ):
+        self.deviceManage = DeviceManager(aManageIRQ)
             
     def handleIO(self, aPCB , nextInstruccion):
         aPCB.changeStatus(State.WAITING)

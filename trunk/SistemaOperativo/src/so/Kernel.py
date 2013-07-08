@@ -10,6 +10,7 @@ from PCB import *
 from Timer import *
 from Disk import *
 
+
 class Kernel:
 
     def __init__(self, policity, aMMU):
@@ -18,12 +19,12 @@ class Kernel:
         self.shortScheduler = ShortScheduler(policity, self)
         self.longScheduler = LongScheduler(policity, self)#revisar
         self.pcbCurrent = None
-        self.handlerIO = HandlerIO()
         self.mmu = aMMU #Realizar
         self.timer = Timer(self) 
         self.pcbFinish = []
         self.manageIRQ = ManageIRQ(self)
         self.disk = Disk()
+        self.handlerIO = HandlerIO(self.manageIRQ)
         
     # def run(self):
     def initializeThread(self):
@@ -40,6 +41,7 @@ class Kernel:
         
     def setNextPcb(self):
         self.cpu.setPCB(self.shortScheduler.next())
+        self.timer.currentQuantum.reset()
 
     def contextSwitch(self):
         self.modeOn() # coloco en modo kernel
