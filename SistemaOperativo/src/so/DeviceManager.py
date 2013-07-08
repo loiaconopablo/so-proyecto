@@ -23,9 +23,12 @@ class DeviceManager:
     def addDevice(self, aDeviceName):
         self.devices[aDeviceName] = aDeviceName(self)
 
-    def initializeThread(self): #Verificar si esta bien el for para recorrer el dictionary
+    def initializeThread(self):
         for i in self.devices:
-            i.start()
+            self.devices[i].start()
             
     def downThread(self):
         self #ver como dar de bajas los thread
+        
+    def end(self, aPCB):
+        self.manageIRQ.endIO(aPCB)

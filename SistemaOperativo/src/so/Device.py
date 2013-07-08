@@ -28,7 +28,7 @@ class Device(threading.Thread):
                 time.sleep(5)   #Simula el tiempo que tarda el dispositivo en ejecutar la 
                 aPCB.changeStatus(State.Ready) #instruccion
                 print("Termine de correr")
-                self.deviceManger.end(aPCB)
+                self.deviceManger.end(aPCB) ### HACER!!!
 
     def setListTask(self, newvalue):
         self.listTask = newvalue

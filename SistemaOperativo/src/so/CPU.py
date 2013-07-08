@@ -11,29 +11,32 @@ class CPU:
         self.pc = 0
         self.pcbCurrent = None
         self.timer = Timer()
-
-
-    def fetchInstruction(self,):
+        
+    def fetchInstruction(self,): #lo hace en modo usuario VERIFICAR
         if self.hayPCB():
             if self.pcbCurrent.isProgramInMemory():
                 self.runInstruccion()              
             else:
-                self.kernel.mmusaveInMemory(self.pcbCurrent)#carga el programa en memoria
+                self.kernel.mmu.saveInMemory(self.pcbCurrent)#carga el programa en memoria
+                self.runInstruccion()
             self.isLastInstruccion()
             
     def hayPCB(self):
         return self.pcbCurrent != None          
 
+
     def runInstruccion(self):
         nextInstruccion = self.readInstruccion()
         if self.nextIsIO(nextInstruccion): # Validar (si es una instruccion de I/O) para hacer una IRQ
-            self.iOInterrupt(self.pcbCurrent, nextInstruccion)
-            #EL PC LO INCREMENTA LUEGO DE EL HANDLER IO EJECUTE LA INSTRUCCION
+            self.iOInterrupt(self.pcbCurrent, nextInstruccion) #EL PC LO INCREMENTA LUEGO DE EL HANDLER IO EJECUTE LA INSTRUCCION
         else:
-            self.pcbCurrent.changeStatus(State.RUNNING)
-            nextInstruccion.execute()
-            self.pcbCurrent.increasePc()
-            self.pcbCurrent.changeStatus(State.READY)#Analizar si es necesario
+            self.runCPUInstrucction(nextInstruccion)
+
+    def runCPUInstrucction(self, nextInstruccion):
+        self.pcbCurrent.changeStatus(State.RUNNING)
+        nextInstruccion.execute()
+        self.pcbCurrent.increasePc()
+        self.pcbCurrent.changeStatus(State.READY) #Analizar si es necesario
     
     def readInstruccion(self):
         instruccion=self.kernel.mmu.read(self.pcbCurrent.nextDirInstruccion())

@@ -35,7 +35,6 @@ class Timer:
         if not self.kernel.isModeKernel():
             if self.timeOut():
                 self.timeOutInterrupt()
-                self.reset()
             else: 
                 self.decreasedQuamtum()
                 self.kernel.cpu.fetchInstruction()

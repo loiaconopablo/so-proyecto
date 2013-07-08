@@ -9,7 +9,7 @@ from HandlerIO import *
 from PCB import *
 
 class ManageIRQ:
-    def __init__(self, aKernel, aHandler):
+    def __init__(self, aKernel):
             self.kernel = aKernel
         
     def iOInterrupt(self, pcb , nextInstruccion):
@@ -24,7 +24,7 @@ class ManageIRQ:
         self.kernel.modoOn()
         self.kernel.pcbFinish.append(self.kernel.cpu.getPCB())  # se guarda el pcb finalizado en la lista.
         self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
-        self.kernel.memory.release(pcb) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB. HACER!!!!!
+        self.kernel.memory.release(pcb) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB.
         print("Finalizo el proceso actual")
         self.kernel.longScheduler.checkForSpace()#Si hay pcb en la lista de espera
         self.kernel.contextSwitch()
@@ -44,5 +44,10 @@ class ManageIRQ:
     def newInterrupt(self, aProgramName):  
         print("Entro un nuevo proceso")
         self.kernel.insertProcess(aProgramName)  
-            
+    
+    def endIO(self, pcb):
+        self.kernel.modoOn() #Ver si es neceario ponerlo en modoON
+        print("Se agrega el proceso que termino IO a la cola de ready")
+        self.kernel.shortScheduler.retryAdd(pcb)
+        self.kernel.modoOff()
         
