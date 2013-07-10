@@ -14,9 +14,6 @@ class Timer:
     
     def initializeThread(self):
         self.clock.start()
-    
-    def downThread(self):
-        self #Ver como doy de baja los threads
 
     def decreasedQuamtum(self):
         self.currentQuantum = self.currentQuantum - 1

@@ -10,7 +10,7 @@ class AsignacionContinua:
     def __init__(self, aMemPolicity, aMMU):
         self.MMU = aMMU
         self.busyBlock = []  # memoria logica, no tiene bloques usados al principio al principio
-        self.freeBlocks = [Block(1, 32)]  # memoria logica, tiene un bloque entero libre
+        self.freeBlocks = [Block(1, self.aMMU.size())]  # memoria logica, tiene un bloque entero libre
         self.policityMemory = aMemPolicity
 
     def freeSize (self):
@@ -58,9 +58,7 @@ class AsignacionContinua:
         return freeDir
         
     def compactFreeCell(self,freeDir):#  COMPACTANDO BLOQUES SIN USO
-        # positionLastBlock = ((len(self.busyBlock)) - 1 )  # ME GUARDO LA POSICION DEL ULTIMO BLOQUE
-        # lastBlock = self.busyBlock[positionLastBlock]  # ME GUARDO AL ULTIMO BLOQUE.
-        self.freeBlocks = [Block((freeDir), 32)]  # CREO EL BLOQUE LIBRE QUE SALIO DE COMPACTAR.
+        self.freeBlocks = [Block((freeDir), self.aMMU.size())]  # CREO EL BLOQUE LIBRE QUE SALIO DE COMPACTAR.
 
     def orderBlocks(self, aListOfBlocks):
         aListOfBlocks.sorted(self.queue, key = lambda block: block.dirBase) #ordenado por la direccion base
@@ -75,11 +73,10 @@ class AsignacionContinua:
     def release(self, aPCB):
         block = self.giveMeFreeBlockFromCell(aPCB.dirBase)
         self.MMU.releaseMemory(block.dirBase, block.dirEnd) #borra la memoria fisica
-        block.pcbAssociated = None #libera el bloque
+        block.pcbAssociated = None #libera el bloque del pcb
         position = self.busyBlock.index(block)
         self.freeBlocks.append(self.busyBlock.pop(position)) #saca el bloque de la lista de free y lo agrega a la otra lista       
-            
-    #estos metodos son para el release
+
     def giveMeFreeBlockFromCell(self, aDirCell):
         for block in self.busyBlock:
             if block.containDir(aDirCell):
@@ -87,6 +84,3 @@ class AsignacionContinua:
                 return (self.busyBlock[position])
                 break
 
-        
-        
-        

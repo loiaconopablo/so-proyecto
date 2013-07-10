@@ -3,9 +3,7 @@ Created on 15/06/2013
 
 @author: Pablo
 '''
-from PCB.py import *
-from Device.py import *
-
+from Device import *
 
 
 class DeviceManager:
@@ -20,15 +18,13 @@ class DeviceManager:
         device = self.get(aDevice)
         device.addTask(aPCB, nextInstruccion)
 
-    def addDevice(self, aDeviceName):
-        self.devices[aDeviceName] = aDeviceName(self)
+    def addDevice(self, aDevice):
+        aDevice.setManager(self)
+        self.devices[aDevice.getName()] = aDevice
 
     def initializeThread(self):
         for i in self.devices:
             self.devices[i].start()
-            
-    def downThread(self):
-        self #ver como dar de bajas los thread
-        
+
     def end(self, aPCB):
         self.manageIRQ.endIO(aPCB)
