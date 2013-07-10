@@ -12,6 +12,9 @@ class CPU:
         self.pcbCurrent = None
         self.timer = Timer()
         
+    def initializeThread(self):
+        self.timer.initializeThread()
+        
     def fetchInstruction(self,): #lo hace en modo usuario VERIFICAR
         if self.hayPCB():
             if self.pcbCurrent.isProgramInMemory():

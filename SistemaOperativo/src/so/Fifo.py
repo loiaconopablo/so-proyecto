@@ -2,27 +2,27 @@
 @author: Pablo
 '''
 import threading
-semaforo = threading.Semaphore()
+semaforo = threading.Lock()  
 
-class Fifo:
+class Fifo():
 
     def __init__(self):
         self.qReady = []
 
     def next(self):
-        semaforo.acquire()
+        #semaforo.acquire()
         return self.qReady.pop(0)
-        semaforo.release()
+        #semaforo.release()
         
     def add(self, aPCB):
-        semaforo.acquire()
+        #semaforo.acquire()
         return self.qReady.append(aPCB)
-        semaforo.release()
+        #semaforo.release()
         
     def isRR(self):
         return False
     
     def retryAdd(self, aPCB):
-        semaforo.acquire()
+        #semaforo.acquire()
         self.add(aPCB)
-        semaforo.release()
+        #semaforo.release()

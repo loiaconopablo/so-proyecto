@@ -15,6 +15,7 @@ class Clock(threading.Thread):
         self.timer = aTimer
 
     def run(self):
+        print ("Starting Clock")
         while (True):
             time.sleep(1)
             self.timer.run()

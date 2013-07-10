@@ -26,13 +26,10 @@ class Kernel:
         self.disk = Disk()
         self.handlerIO = HandlerIO(self.manageIRQ)
         
-    # def run(self):
     def initializeThread(self):
-        self # Inicializar todos los threads
-    
-    def downThread(self):
-        self #ver como bajar todos los threasd
-            
+        self.cpu.initializeThread()
+        self.handlerIO.initializeThread()
+           
     def modeOn(self):  # lo pone en modo kernel
         self.modeKernel = True  
 
