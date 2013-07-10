@@ -57,7 +57,6 @@ class LongScheduler(SchedulerAbstract):
         aPCB.changeStatus(State.WAITING)
         self.policity.retryAdd(aPCB)
 
-
     def saveInMemory(self, aPCB):
         if (self.kernel.mmu.freeSize() >= aPCB.size()):
             self.kernel.mmu.saveInMemory(aPCB)
@@ -74,7 +73,7 @@ class LongScheduler(SchedulerAbstract):
 
     def checkForSpace(self):
         if self.hayWaiting():
-            self.handle(self.policity.next)  
+            self.handle(self.policity.next())  
         
     def hayWaiting(self): 
         return len(self.policity.qReady) > 0    

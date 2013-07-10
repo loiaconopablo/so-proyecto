@@ -19,7 +19,7 @@ class Kernel:
         self.shortScheduler = ShortScheduler(policity, self)
         self.longScheduler = LongScheduler(policity, self)#revisar
         self.pcbCurrent = None
-        self.mmu = aMMU #Realizar
+        self.mmu = aMMU
         self.timer = Timer(self) 
         self.pcbFinish = []
         self.manageIRQ = ManageIRQ(self)
