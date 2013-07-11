@@ -31,8 +31,8 @@ class ManageIRQ:
         
     def timeOutInterrupt(self):
         self.kernel.modeOn()
+        print("Se termino el tiempo de ejecucion del "+ self.kernel.cpu.pcbCurrent.getNameProgram())
         self.kernel.contextSwitch()
-        print("Se termino el tiempo de ejecucion del proceso actual")
         self.kernel.modeOff()
         
     def nilInterrupt(self):
@@ -47,7 +47,6 @@ class ManageIRQ:
         self.kernel.insertProcess(aProgramName)  
         print("Entro un nuevo proceso")
 
-    
     def endIO(self, pcb):
         print("Se agrega el proceso que termino IO a la cola de ready")
         pcb.increasePc()

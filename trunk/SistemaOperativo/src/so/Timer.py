@@ -23,10 +23,10 @@ class Timer:
         self.currentQuantum = self.quantum
     
     def timeOut(self):
-        return self.currentQuantum == 0
+        return (self.currentQuantum == 0)
     
-    def timeOutInterrupt(self, aPCB):
-        self.kernel.manageIRQ.timeOutInterrupt(aPCB)
+    def timeOutInterrupt(self):
+        self.kernel.manageIRQ.timeOutInterrupt()
         
     def run(self):
         if not self.kernel.isModeKernel():

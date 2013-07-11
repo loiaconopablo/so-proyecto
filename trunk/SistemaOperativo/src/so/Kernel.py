@@ -23,7 +23,6 @@ class Kernel:
         self.shortScheduler = ShortScheduler(policity, self)
         self.longScheduler = LongScheduler(policity, self)#revisar
         self.cpu = CPU(self)
-        self.timer = Timer(self) 
            
     def initializeThread(self):
         self.cpu.initializeThread()
@@ -37,7 +36,7 @@ class Kernel:
         
     def setNextPcb(self):
         self.cpu.setPCB(self.shortScheduler.next())
-        self.timer.reset()
+        self.cpu.timer.reset()
 
     def contextSwitch(self):
         self.modeOn() # coloco en modo kernel

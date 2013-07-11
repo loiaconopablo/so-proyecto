@@ -32,7 +32,7 @@ class SchedulerAbstract:
     def quamtum(self):
         if self.policity.isRR():
             return self.policity.getQuantum()
-        else: return 10
+        else: return 5
 
 class ShortScheduler(SchedulerAbstract):
     def __init__(self, aPolicity, aKernel):     
@@ -51,7 +51,7 @@ class LongScheduler(SchedulerAbstract):
     def __init__(self, aPolicity, aKernel):
         SchedulerAbstract.__init__(self, aPolicity, aKernel)
         
-    def add(self, aPCB):
+    def addLong(self, aPCB):
         aPCB.changeStatus(State.WAITING)
         self.policity.add(aPCB)
         
@@ -64,7 +64,7 @@ class LongScheduler(SchedulerAbstract):
             self.kernel.mmu.saveInMemory(aPCB)
             self.kernel.shortScheduler.add(aPCB)
         else:
-            self.add(aPCB)
+            self.addLong(aPCB)
 
     def handle(self, aPCB):
         if self.kernel.disk.isInDisk(aPCB.getNameProgram()):
@@ -76,7 +76,7 @@ class LongScheduler(SchedulerAbstract):
 
     def checkForSpace(self):
         if self.hayWaiting():
-            self.handle(self.policity.next())  
+            self.saveInMemory(self.policity.next())  
         
     def hayWaiting(self): 
         return len(self.policity.qReady) > 0    
