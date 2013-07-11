@@ -9,6 +9,7 @@ class Disk:
         
     def load(self, aProgram):
         self.listOfProgram[aProgram.getName()] = aProgram
+        aProgram.loadInMemory()
     
     def get(self, aNameOfProgram):
         return (self.listOfProgram[aNameOfProgram])

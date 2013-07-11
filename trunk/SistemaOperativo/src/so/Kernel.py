@@ -37,7 +37,7 @@ class Kernel:
         
     def setNextPcb(self):
         self.cpu.setPCB(self.shortScheduler.next())
-        self.timer.currentQuantum.reset()
+        self.timer.reset()
 
     def contextSwitch(self):
         self.modeOn() # coloco en modo kernel
@@ -46,7 +46,7 @@ class Kernel:
         else:
             self.returnToPcbTable()  # # vuelvo a poner el pcb en la cola qReady
             self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
-        self.modoOff() #vuelvo al modo usuario
+        self.modeOff() #vuelvo al modo usuario
         
     def returnToPcbTable(self):
         self.shortScheduler.retryAdd(self.cpu.pcbCurrent)

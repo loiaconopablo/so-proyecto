@@ -33,6 +33,9 @@ class MMU:
             self.physicalMemory[a] = None #Libera la celda
     #De donde saque la info: http://stackoverflow.com/questions/2672936/multiple-counters-in-a-single-for-loop-python
         
+    def release(self, aPCB):
+        self.logicalMemory.release(aPCB)
+    
     def releaseMemory(self, baseCell, endCell):         
         for i in range(baseCell,(endCell +1)):
             self.physicalMemory[i] = None

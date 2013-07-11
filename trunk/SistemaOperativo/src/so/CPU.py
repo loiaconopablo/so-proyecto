@@ -22,7 +22,6 @@ class CPU:
             else:
                 self.kernel.mmu.saveInMemory(self.pcbCurrent)#carga el programa en memoria
                 self.runInstruccion()
-            self.isLastInstruccion()
         else:
             self.kernel.manageIRQ.nilInterrupt()
             
@@ -31,11 +30,12 @@ class CPU:
 
 
     def runInstruccion(self):
-        nextInstruccion = self.readInstruccion()
-        if self.nextIsIO(nextInstruccion): # Validar (si es una instruccion de I/O) para hacer una IRQ
-            self.iOInterrupt(self.pcbCurrent, nextInstruccion) #EL PC LO INCREMENTA LUEGO DE EL HANDLER IO EJECUTE LA INSTRUCCION
-        else:
-            self.runCPUInstrucction(nextInstruccion)
+        if not self.isLastInstruccion():
+            nextInstruccion = self.readInstruccion()
+            if self.nextIsIO(nextInstruccion): # Validar (si es una instruccion de I/O) para hacer una IRQ
+                self.iOInterrupt(self.pcbCurrent, nextInstruccion) #EL PC LO INCREMENTA LUEGO DE EL HANDLER IO EJECUTE LA INSTRUCCION
+            else:
+                self.runCPUInstrucction(nextInstruccion)
 
     def runCPUInstrucction(self, nextInstruccion):
         self.pcbCurrent.changeStatus(State.RUNNING)
@@ -52,16 +52,18 @@ class CPU:
 
     def isLastInstruccion(self):
         if  self.pcbCurrent.isLastInstruccion():
-            self.killInterrupt(self.pcbCurrent)
+            self.killInterrupt()
+            return True
+        else: return False
                    
     def iOInterrupt(self, aPCB , nextInstruccion):
         self.kernel.manageIRQ.iOInterrupt(aPCB, nextInstruccion)
 
-    def killInterrupt(self, aPCB):
-        self.kernel.manageIRQ.killInterrupt(aPCB)
+    def killInterrupt(self):
+        self.kernel.manageIRQ.killInterrupt()
     
     def setPCB(self , aPCB):
         self.pcbCurrent = aPCB
         
     def getPCB(self):
-        return self.pcbCurrent()
+        return self.pcbCurrent

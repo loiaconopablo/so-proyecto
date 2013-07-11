@@ -14,20 +14,19 @@ class ManageIRQ:
         
     def iOInterrupt(self, pcb , nextInstruccion):
         self.kernel.modeOn()
-        self.kernel.handlerIO.handle(pcb, nextInstruccion)
+        self.kernel.handlerIO.handleIO(pcb, nextInstruccion)
         print("Se mando un proceso a la cola de I/O")
         self.kernel.cpu.setPCB(None)
         self.kernel.contextSwitch()
         self.kernel.modeOff()
 
-    def killInterrupt(self, pcb):
+    def killInterrupt(self):
         self.kernel.modeOn()
+        print("Finalizo la ejecucion del "+ self.kernel.cpu.pcbCurrent.getNameProgram())
         self.kernel.pcbFinish.append(self.kernel.cpu.getPCB())  # se guarda el pcb finalizado en la lista.
-        self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
-        self.kernel.memory.release(pcb) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB.
-        print("Finalizo el proceso actual")
+        self.kernel.mmu.release(self.kernel.cpu.pcbCurrent) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB.
         self.kernel.longScheduler.checkForSpace()#Si hay pcb en la lista de espera
-        self.kernel.contextSwitch()
+        self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
         self.kernel.modeOff()
         
     def timeOutInterrupt(self):
@@ -38,16 +37,20 @@ class ManageIRQ:
         
     def nilInterrupt(self):
         self.kernel.modeOn()
-        print("No hay programas en la QReady")
-        self.kernel.cpu.timer.reset()
+        if self.kernel.shortScheduler.isEmpty():
+            print("No hay programas en la QReady")
+            self.kernel.cpu.timer.reset()
+        else: self.kernel.contextSwitch()
         self.kernel.modeOff()
         
     def newInterrupt(self, aProgramName):  
-        print("Entro un nuevo proceso")
         self.kernel.insertProcess(aProgramName)  
+        print("Entro un nuevo proceso")
+
     
     def endIO(self, pcb):
         print("Se agrega el proceso que termino IO a la cola de ready")
+        pcb.increasePc()
         self.kernel.shortScheduler.retryAdd(pcb)
         
     def noFoundProgram(self, aNameOfProgram):
