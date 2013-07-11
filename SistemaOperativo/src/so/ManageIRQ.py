@@ -25,7 +25,6 @@ class ManageIRQ:
         print("Finalizo la ejecucion del "+ self.kernel.cpu.pcbCurrent.getNameProgram())
         self.kernel.pcbFinish.append(self.kernel.cpu.getPCB())  # se guarda el pcb finalizado en la lista.
         self.kernel.mmu.release(self.kernel.cpu.pcbCurrent) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB.
-        self.kernel.longScheduler.checkForSpace()#Si hay pcb en la lista de espera
         self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
         self.kernel.modeOff()
         
