@@ -3,6 +3,7 @@
 '''
 from State import *
 from Kernel import *
+import threading
 
 class SchedulerAbstract:
 
@@ -46,10 +47,11 @@ class ShortScheduler(SchedulerAbstract):
         aPCB.changeStatus(State.READY)
         self.policity.retryAdd(aPCB) 
         
-class LongScheduler(SchedulerAbstract):
+class LongScheduler(SchedulerAbstract, threading.Thread):
     
     def __init__(self, aPolicity, aKernel):
         SchedulerAbstract.__init__(self, aPolicity, aKernel)
+        threading.Thread.__init__(self)
         
     def addLong(self, aPCB):
         aPCB.changeStatus(State.WAITING)
@@ -80,3 +82,8 @@ class LongScheduler(SchedulerAbstract):
         
     def hayWaiting(self): 
         return len(self.policity.qReady) > 0    
+    
+    def run(self):
+        print ("Starting LongScheduler")
+        while(True):
+            self.checkForSpace()

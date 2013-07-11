@@ -20,13 +20,14 @@ class Kernel:
         self.disk = aDisk
         self.manageIRQ = ManageIRQ(self)     
         self.handlerIO = HandlerIO(self.manageIRQ)
-        self.shortScheduler = ShortScheduler(policity, self)
-        self.longScheduler = LongScheduler(policity, self)#revisar
+        self.shortScheduler = ShortScheduler(policity(), self)
+        self.longScheduler = LongScheduler(policity(), self)#revisar
         self.cpu = CPU(self)
            
     def initializeThread(self):
         self.cpu.initializeThread()
         self.handlerIO.initializeThread()
+        self.longScheduler.start()
            
     def modeOn(self):  # lo pone en modo kernel
         self.modeKernel = True  
