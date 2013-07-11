@@ -5,27 +5,26 @@
 from Scheduler import *
 from CPU import *
 from ManageIRQ import *
-from Program import *
+from MMU import *
 from PCB import *
 from Timer import *
-from Disk import *
+
 
 
 class Kernel:
 
-    def __init__(self, policity, aMMU):
-        self.cpu = CPU(self)
+    def __init__(self, policity, aMMU, aDisk):
         self.modeKernel = False  # comienza en modo usuario
+        self.mmu = aMMU
+        self.pcbFinish = []
+        self.disk = aDisk
+        self.manageIRQ = ManageIRQ(self)     
+        self.handlerIO = HandlerIO(self.manageIRQ)
         self.shortScheduler = ShortScheduler(policity, self)
         self.longScheduler = LongScheduler(policity, self)#revisar
-        self.pcbCurrent = None
-        self.mmu = aMMU
+        self.cpu = CPU(self)
         self.timer = Timer(self) 
-        self.pcbFinish = []
-        self.manageIRQ = ManageIRQ(self)
-        self.disk = Disk()
-        self.handlerIO = HandlerIO(self.manageIRQ)
-        
+           
     def initializeThread(self):
         self.cpu.initializeThread()
         self.handlerIO.initializeThread()
@@ -55,10 +54,13 @@ class Kernel:
     def isModeKernel(self):
         return self.modeKernel
     
-    def addProcess(self, aProgramName):
+    def runProcess(self, aProgramName):
         self.manageIRQ.newInterrupt(aProgramName)
         
     def insertProcess(self, aProgramName):
-        self.PCB = self.PCB(aProgramName)
-        self.longScheduler.handle(self.PCB)
+        newPCB = PCB(aProgramName)
+        self.longScheduler.handle(newPCB)
+        
+    def addDevice(self, aDevice):
+        self.handlerIO.addDevice(aDevice)
         

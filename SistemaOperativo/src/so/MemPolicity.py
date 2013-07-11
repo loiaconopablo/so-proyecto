@@ -37,7 +37,7 @@ class MemPolicity:
         return block.getSize() != sizeInstruction          
 
     def resizeBlock(self, aFreeListBlock, sizePCB, bestBlock):
-        newFreeBlock = Block((bestBlock.getDirBase() + sizePCB), bestBlock.getdDirEnd())  # Genero nuevo bloque vacio de la sobra
+        newFreeBlock = Block((bestBlock.getDirBase() + sizePCB), bestBlock.getDirEnd())  # Genero nuevo bloque vacio de la sobra
         aFreeListBlock.append(newFreeBlock)  # Agrego el bloque vacio a la lista de los vacios.
         bestBlock.dirEnd = (bestBlock.getDirBase() + sizePCB) - 1  # Recorto al bloque asignado
         

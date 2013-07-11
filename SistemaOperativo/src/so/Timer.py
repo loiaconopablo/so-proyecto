@@ -7,7 +7,7 @@ from Clock import *
 
 class Timer:
     def __init__(self, aKernel):
-        self.quantum = aKernel.scheduler.quamtum()
+        self.quantum = aKernel.shortScheduler.quamtum()
         self.currentQuantum = self.quantum
         self.clock = Clock(self)
         self.kernel = aKernel

@@ -2,6 +2,8 @@
 @author: Pablo
 '''
 from State import *
+from Kernel import *
+
 class SchedulerAbstract:
 
     def __init__(self, aPolicity, aKernel):
@@ -13,7 +15,7 @@ class SchedulerAbstract:
             self.kernel = aKernel
         
     def next(self):
-        if not self.isEmpty:
+        if not self.isEmpty():
             return self.policity.next()
         else:
             self.kernel.manageIRQ.nilInterrupt()
@@ -33,7 +35,7 @@ class SchedulerAbstract:
         else: return 10
 
 class ShortScheduler(SchedulerAbstract):
-    def __init__(self, SchedulerAbstract, aPolicity, aKernel):     
+    def __init__(self, aPolicity, aKernel):     
         SchedulerAbstract.__init__(self, aPolicity, aKernel)
        
     def add(self, aPCB):
@@ -46,7 +48,7 @@ class ShortScheduler(SchedulerAbstract):
         
 class LongScheduler(SchedulerAbstract):
     
-    def __init__(self, SchedulerAbstract, aPolicity, aKernel):
+    def __init__(self, aPolicity, aKernel):
         SchedulerAbstract.__init__(self, aPolicity, aKernel)
         
     def add(self, aPCB):
@@ -58,7 +60,7 @@ class LongScheduler(SchedulerAbstract):
         self.policity.retryAdd(aPCB)
 
     def saveInMemory(self, aPCB):
-        if (self.kernel.mmu.freeSize() >= aPCB.size()):
+        if (self.kernel.mmu.freeSize() >= aPCB.getSize()):
             self.kernel.mmu.saveInMemory(aPCB)
             self.kernel.shortScheduler.add(aPCB)
         else:
@@ -66,10 +68,11 @@ class LongScheduler(SchedulerAbstract):
 
     def handle(self, aPCB):
         if self.kernel.disk.isInDisk(aPCB.getNameProgram()):
-            aPCB.setProgram(self.kernel.disk.get(aPCB.id))
+            aPCB.setProgram(self.kernel.disk.get(aPCB.getNameProgram()))
+            aPCB.setPriority(aPCB.id.priority)
             self.saveInMemory(aPCB)
         else:
-            self.saveInMemory(aPCB)
+            self.kernel.manageIRQ.noFoundProgram(aPCB.getNameProgram())
 
     def checkForSpace(self):
         if self.hayWaiting():

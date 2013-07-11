@@ -39,7 +39,7 @@ class Device(threading.Thread):
     def setListTask(self, newvalue):
         self.listTask = newvalue
     
-    def getListTaks(self, newvalue):
+    def getListTaks(self):
         return self.listTask
 
     def addTask(self, aPCB, nextInstruccion):
@@ -53,11 +53,8 @@ class Device(threading.Thread):
         return self.__class__.__name__
 
 class Printer(Device):
-    def __init__(self, Device):     
-        Device.__init__(self)
+    pass
 
 class CDROM(Device):
-    def __init__(self, Device):     
-        Device.__init__(self)
-
+    pass
     

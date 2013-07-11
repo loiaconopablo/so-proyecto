@@ -10,7 +10,7 @@ class CPU:
         self.kernel = aKernel
         self.pc = 0
         self.pcbCurrent = None
-        self.timer = Timer()
+        self.timer = Timer(self.kernel)
         
     def initializeThread(self):
         self.timer.initializeThread()
@@ -23,6 +23,8 @@ class CPU:
                 self.kernel.mmu.saveInMemory(self.pcbCurrent)#carga el programa en memoria
                 self.runInstruccion()
             self.isLastInstruccion()
+        else:
+            self.kernel.manageIRQ.nilInterrupt()
             
     def hayPCB(self):
         return self.pcbCurrent != None          
