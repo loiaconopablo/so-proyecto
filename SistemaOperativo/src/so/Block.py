@@ -49,8 +49,8 @@ class Block:
     #===========================================================================
              
     def containDir(self, aDirCell):  # pregunta si una direccion esta incluida en el bloque
-        return (self.getDirBase() >= aDirCell and self.getDirEnd() <= aDirCell)
-    #return (aDirCell in range(self.getDirBase(),self.getDirEnd()+1)) Otra Opcion de hacerlo
+        #return (self.getDirBase() >= aDirCell and self.getDirEnd() <= aDirCell)
+        return (aDirCell in range(self.getDirBase(),self.getDirEnd()+1)) #Otra Opcion de hacerlo
     
     def isInUse(self):
         return (self.pcbAssociated!=None)

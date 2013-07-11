@@ -27,9 +27,9 @@ class Device(threading.Thread):
                 aPCB = tupla[0]
                 nextInstruccion = tupla[1]
                 aPCB.changeStatus(State.RUNNING)
+                time.sleep(2)  # Simula el tiempo que tarda el dispositivo en ejecutar la 
                 nextInstruccion.execute()
-                time.sleep(5)  # Simula el tiempo que tarda el dispositivo en ejecutar la 
-                aPCB.changeStatus(State.Ready)  # instruccion
+                aPCB.changeStatus(State.READY)  # instruccion
                 print(self.__class__.__name__+" ending instruction execution of IO.")
                 self.deviceManger.end(aPCB)
 
