@@ -7,13 +7,14 @@ import uuid
 
 class PCB:
 #Process Control Block
-    def __init__(self,aProgramName, aPriority=10):
-        self.id = aProgramName
+    def __init__(self,aProgramName):
+        self.id = None
+        self.aProgramName=aProgramName
         self.pid = uuid.uuid4() # Genera un número - Generate a random UUID
         self.status= State.NEW
         self.dirBase = None
         self.pc = 0
-        self.priority = aPriority
+        self.priority = 0 # Luego se le carga la prioridad del programa, una vez que se carga
     
     def changeStatus(self, aNewStatus):
         self.status=aNewStatus
@@ -40,7 +41,10 @@ class PCB:
         return (self.pc == self.getSize())
     
     def getNameProgram(self):
-        return self.id.getName()
+        return self.aProgramName
+    
+    def setPriority(self, aPriority):
+        self.priority = aPriority
     
     def setProgram(self, aProgram):
         self.id = aProgram

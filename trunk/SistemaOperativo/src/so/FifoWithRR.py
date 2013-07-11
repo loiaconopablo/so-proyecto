@@ -11,9 +11,9 @@ class FifoWithRR(Fifo, RoundRobin):
         RoundRobin.__init__(self, aQuamtum)
 
     def isRR(self):
-        RoundRobin.isRR(self)
+        return True
 
 #===============================================================================
-# Se utiliza herencia multiple, solo se utiliza el constructor de RR, y el is RR, el resto
+# Se utiliza herencia multiple, solo se utiliza el constructor de RR, el resto
 # de los metodos los usa de FIFO, ya que se pasa primero como parametro.
 #===============================================================================

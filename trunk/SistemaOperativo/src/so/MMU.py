@@ -4,8 +4,8 @@ Created on 09/07/2013
 @author: Pablo Loiacono
 '''
 class MMU:
-    def __init__(self, aTypeOfMemory, aMemPolicity):
-        self.logicalMemory = aTypeOfMemory(aMemPolicity,self)
+    def __init__(self):
+        self.logicalMemory = None
         self.physicalMemory = {x: None for x in range(1, 33)}  # Devuelve un dictionary con 32 celdas vacias
         
     def read(self, cell):
@@ -18,7 +18,7 @@ class MMU:
         return len(self.physicalMemory)
     
     def freeSize(self):
-        self.logicalMemory.freeSize()
+        return self.logicalMemory.freeSize()
         
     def addToPhysicalMem(self, aDirBase, aListInstruction):
         dirBaseMem = aDirBase
@@ -36,3 +36,6 @@ class MMU:
     def releaseMemory(self, baseCell, endCell):         
         for i in range(baseCell,(endCell +1)):
             self.physicalMemory[i] = None
+        
+    def setLogicalMemory(self, aTypeOfLogicalMem):
+        self.logicalMemory = aTypeOfLogicalMem

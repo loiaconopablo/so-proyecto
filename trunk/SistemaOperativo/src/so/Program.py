@@ -3,13 +3,14 @@
 '''
 
 class Program:
-        def __init__(self, aName):
+        def __init__(self, aName, priority=10):
                 self.instruction = []
                 self.programName = aName
                 self.memory = False
+                self.priority = priority #Si no se le pasa prioridad se carga por defecto 10
         
-        def add(self, aObject):
-                self.instruction.append(aObject)
+        def add(self, instruccion):
+                self.instruction.append(instruccion)
             
         def getSize(self):
             return len(self.instruction)

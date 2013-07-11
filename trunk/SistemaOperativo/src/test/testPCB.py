@@ -11,6 +11,8 @@ class TestPCB(unittest.TestCase):
 
 
     def setUp(self):
+        self.programa = Program("FirstProgram",5)
+        self.programaB = Program("SecondProgram")
         self.OnePCB = PCB("Program1")
         self.TwoPCB = PCB("Program2",20)
 

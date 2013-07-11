@@ -13,41 +13,44 @@ class ManageIRQ:
             self.kernel = aKernel
         
     def iOInterrupt(self, pcb , nextInstruccion):
-        self.kernel.modoOn()
+        self.kernel.modeOn()
         self.kernel.handlerIO.handle(pcb, nextInstruccion)
         print("Se mando un proceso a la cola de I/O")
         self.kernel.cpu.setPCB(None)
         self.kernel.contextSwitch()
-        self.kernel.modoOff()
+        self.kernel.modeOff()
 
     def killInterrupt(self, pcb):
-        self.kernel.modoOn()
+        self.kernel.modeOn()
         self.kernel.pcbFinish.append(self.kernel.cpu.getPCB())  # se guarda el pcb finalizado en la lista.
         self.kernel.cpu.setPCB(None)  # borrar el pcb terminado
         self.kernel.memory.release(pcb) #LIBERA EL ESPACIO DONDE ESTABA ASIGNADO EL PCB.
         print("Finalizo el proceso actual")
         self.kernel.longScheduler.checkForSpace()#Si hay pcb en la lista de espera
         self.kernel.contextSwitch()
-        self.kernel.modoOff()
+        self.kernel.modeOff()
         
     def timeOutInterrupt(self):
-        self.kernel.modoOn()
+        self.kernel.modeOn()
         self.kernel.contextSwitch()
-        print("Se termino el tiempo de ejecuciòn del proceso actual")
-        self.kernel.modoOff()
+        print("Se termino el tiempo de ejecucion del proceso actual")
+        self.kernel.modeOff()
         
     def nilInterrupt(self):
-        self.kernel.modoOn()
-        print("No hay mas programas en la QReady")
-        self.kernel.modoOff()
+        self.kernel.modeOn()
+        print("No hay programas en la QReady")
+        self.kernel.cpu.timer.reset()
+        self.kernel.modeOff()
         
     def newInterrupt(self, aProgramName):  
         print("Entro un nuevo proceso")
         self.kernel.insertProcess(aProgramName)  
     
     def endIO(self, pcb):
-        self.kernel.modoOn() #Ver si es neceario ponerlo en modoON
         print("Se agrega el proceso que termino IO a la cola de ready")
         self.kernel.shortScheduler.retryAdd(pcb)
-        self.kernel.modoOff()
         
+    def noFoundProgram(self, aNameOfProgram):
+        self.kernel.modeOn()
+        print("El programa " + aNameOfProgram + " no se encuentra cargado en disco.Carguelo y vuela a ejecutar el programa")
+        self.kernel.modeOff()

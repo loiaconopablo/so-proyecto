@@ -19,5 +19,6 @@ class Disk:
         else:
             return False
         
-
+    def setListOfProgram(self, aListOfProgram): #Metodo para que sea mas facil testearlo
+        self.listOfProgram = aListOfProgram
             

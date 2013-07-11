@@ -4,15 +4,16 @@ Created on 10/07/2013
 @author: Pablo Loiacono
 '''
 import unittest
-from Priority import *
+from PriorityWithRR import *
 from PCB import *
+from RoundRobin import *
 
 
-class TestPrioriry(unittest.TestCase):
+class TestPrioriryWhitRR(unittest.TestCase):
 
 
     def setUp(self):
-        self.policity = Priority()
+        self.policity = PriorityWithRR(18)
         self.aPCB = PCB("Program1")
         self.bPCB = PCB("Program2", 20)
         self.cPCB = PCB("Program2", 50)
@@ -24,7 +25,8 @@ class TestPrioriry(unittest.TestCase):
     
     def testBuilder(self):
         self.assertEquals(len(self.policity.qReady),0)
-        self.assertFalse(self.policity.isRR())
+        self.assertEquals(self.policity.getQuantum(),18)
+        self.assertTrue(self.policity.isRR())
         
     def testAddYNext(self):
         self.policity.add(self.aPCB)
@@ -39,7 +41,7 @@ class TestPrioriry(unittest.TestCase):
         self.assertEquals(self.policity.qReady[4], self.cPCB)
         self.assertEquals(self.policity.next(), self.ePCB)
         self.assertEquals(self.policity.next(), self.aPCB)
-        
+ 
     def testRetryAdd(self):
         self.policity.retryAdd(self.aPCB)
         self.policity.retryAdd(self.bPCB)
@@ -47,5 +49,5 @@ class TestPrioriry(unittest.TestCase):
         self.assertEquals(self.policity.qReady[1].priority, 19)
  
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestPrioriry)
+suite = unittest.TestLoader().loadTestsFromTestCase(TestPrioriryWhitRR)
 unittest.TextTestRunner(verbosity=2).run(suite)

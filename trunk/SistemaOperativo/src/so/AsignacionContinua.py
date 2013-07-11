@@ -10,7 +10,7 @@ class AsignacionContinua:
     def __init__(self, aMemPolicity, aMMU):
         self.MMU = aMMU
         self.busyBlock = []  # memoria logica, no tiene bloques usados al principio al principio
-        self.freeBlocks = [Block(1, self.aMMU.size())]  # memoria logica, tiene un bloque entero libre
+        self.freeBlocks = [Block(1, self.MMU.sizeMemory())]  # memoria logica, tiene un bloque entero libre
         self.policityMemory = aMemPolicity
 
     def freeSize (self):
