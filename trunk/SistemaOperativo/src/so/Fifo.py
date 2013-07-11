@@ -1,8 +1,10 @@
 '''
 @author: Pablo
 '''
-import threading
-semaforo = threading.Lock()  
+#===============================================================================
+# import threading       NO FUE NECESARIO
+# semaforo = threading.Lock()  
+#===============================================================================
 
 class Fifo():
 

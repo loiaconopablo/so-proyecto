@@ -1,8 +1,11 @@
 '''
 @author: Pablo
 '''
-import threading
-semaforo = threading.Semaphore()
+#===============================================================================
+# import threading       NO FUE NECESARIO
+# semaforo = threading.Lock()  
+#===============================================================================
+
 
 class RoundRobin:
 

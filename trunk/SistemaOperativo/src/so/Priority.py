@@ -1,5 +1,10 @@
-import threading
-semaforo = threading.Semaphore()
+'''
+@author: Pablo
+'''
+#===============================================================================
+# import threading       NO FUE NECESARIO
+# semaforo = threading.Lock()  
+#===============================================================================
 
 class Priority:
 
@@ -8,14 +13,13 @@ class Priority:
 
     def next(self):
         #semaforo.acquire()
-        lenght=len(self.qReady)
-        return self.qReady.pop(lenght-1) ##ANALIZAR SI NECESITAMOS DEVOLVER EL ULTIMO O EL PRIMERO, DEPENDE COMO SE ORDENE
+        return self.qReady.pop(0)
         #semaforo.release()
         
     def add(self, aPCB):
         #semaforo.acquire()
         self.qReady.append(aPCB)
-        self.qReady.sorted(self.queue, key = lambda pcb:pcb.priority)
+        self.qReady.sort(key = lambda pcb:pcb.priority)
         return self.qReady
         #semaforo.release()
 

@@ -4,15 +4,15 @@ Created on 10/07/2013
 @author: Pablo Loiacono
 '''
 import unittest
-from Fifo import *
+from RoundRobin import *
 from PCB import *
 
 
-class TestFifo(unittest.TestCase):
+class TestRoundRobin(unittest.TestCase):
 
 
     def setUp(self):
-        self.policity = Fifo()
+        self.policity = RoundRobin(5)
         self.aPCB = PCB("Program1")
         self.bPCB = PCB("Program2", 20)
         self.cPCB = PCB("Program2", 50)
@@ -23,7 +23,8 @@ class TestFifo(unittest.TestCase):
     
     def testBuilder(self):
         self.assertEquals(len(self.policity.qReady),0)
-        self.assertFalse(self.policity.isRR())
+        self.assertEquals(self.policity.getQuantum(),5)
+        self.assertTrue(self.policity.isRR())
         
     def testAdd(self):
         self.policity.add(self.aPCB)
@@ -35,5 +36,5 @@ class TestFifo(unittest.TestCase):
         self.assertEquals(self.policity.qReady[2], self.cPCB)
         self.assertEquals(self.policity.qReady[3], self.dPCB)
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestFifo)
+suite = unittest.TestLoader().loadTestsFromTestCase(TestRoundRobin)
 unittest.TextTestRunner(verbosity=2).run(suite)
