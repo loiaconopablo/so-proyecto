@@ -8,7 +8,7 @@ class IOInstruccion:
                 self.action = aAction  # Un String que diga algo para saber que se ejecuto
                 self.deviceName = aDeviceName
                 
-        def execute(self, aMemory):
+        def execute(self):
             print(self.action + "Ejecutado en" + self.deviceName)
                 
         def getDeviceName(self):

@@ -61,7 +61,7 @@ class AsignacionContinua:
         self.freeBlocks = [Block((freeDir), self.aMMU.size())]  # CREO EL BLOQUE LIBRE QUE SALIO DE COMPACTAR.
 
     def orderBlocks(self, aListOfBlocks):
-        aListOfBlocks.sorted(self.queue, key = lambda block: block.dirBase) #ordenado por la direccion base
+        aListOfBlocks.sort(key = lambda block: block.dirBase) #ordenado por la direccion base
         
     def firstFreeCell(self):
         firstCell = self.freeBlocks[0].dirBase  # guarda la primera cell del primer bloque libre, para tener un valor de referencia
