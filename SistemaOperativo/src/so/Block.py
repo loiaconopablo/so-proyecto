@@ -9,12 +9,6 @@ class Block:
         self.dirBase = baseCell
         self.dirEnd = endCell
         self.pcbAssociated = None
-        # self.inMemory=False
-
-    #====================================== ?????
-    #def setPid(self, process):
-    #    self.pid = process
-    #======================================
     
     def getDirBase(self):
         return self.dirBase
@@ -27,26 +21,6 @@ class Block:
         
     def getDirEnd(self):
         return self.dirEnd
-        
-    #===========================================================================
-    # def cellDestino(self):
-    #     if not self.lastCell():
-    #         return (self.dirFin + 1)
-    #     else: 
-    #         return None
-    # 
-    # def cellAnterior(self):
-    #     if not self.firstCell():
-    #         return (self.dirBase - 1)
-    #     else: 
-    #         return None
-    #     
-    # def firstCell(self):
-    #     return (self.dirBase == 1)
-    # 
-    # def lastCell(self):
-    #     return (self.dirEnd == 1024)
-    #===========================================================================
              
     def containDir(self, aDirCell):  # pregunta si una direccion esta incluida en el bloque
         #return (self.getDirBase() >= aDirCell and self.getDirEnd() <= aDirCell)
@@ -54,14 +28,3 @@ class Block:
     
     def isInUse(self):
         return (self.pcbAssociated!=None)
-    
-    #===========================================================================
-    # def getInMemory(self):
-    #       return self.inMemory
-    #
-    # def inMemoryOn(self):
-    #     self.inMemory = True
-    # 
-    # def inMemoryOff(self):
-    #     self.inMemory = False    
-    #===========================================================================
