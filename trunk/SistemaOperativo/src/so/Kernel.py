@@ -21,7 +21,7 @@ class Kernel:
         self.manageIRQ = ManageIRQ(self)     
         self.handlerIO = HandlerIO(self.manageIRQ)
         self.shortScheduler = ShortScheduler(policity(), self)
-        self.longScheduler = LongScheduler(policity(), self)#revisar
+        self.longScheduler = LongScheduler(policity(), self)  # revisar
         self.cpu = CPU(self)
            
     def initializeThread(self):
@@ -40,13 +40,13 @@ class Kernel:
         self.cpu.timer.reset()
 
     def contextSwitch(self):
-        self.modeOn() # coloco en modo kernel
+        self.modeOn()  # coloco en modo kernel
         if self.cpu.pcbCurrent == None:  # #chequeo si el CPU finalizo el ultimo PCB o lo 
-            self.setNextPcb()            # #  seteo en el pcb del CPU el proximo pcb
+            self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
         else:
             self.returnToPcbTable()  # # vuelvo a poner el pcb en la cola qReady
             self.setNextPcb()  # #  seteo en el pcb del CPU el proximo pcb
-        self.modeOff() #vuelvo al modo usuario
+        self.modeOff()  # vuelvo al modo usuario
         
     def returnToPcbTable(self):
         self.shortScheduler.retryAdd(self.cpu.pcbCurrent)
